@@ -3,7 +3,7 @@ backend:
   repo: matinmonshizadeh/matinmonshizadeh.github.io
   branch: main
   auth_type: pkce
-  app_id: REPLACE_WITH_YOUR_CLIENT_ID
+  app_id: Ov23liTdfreQWl0Bq7JJ
 
 media_folder: src/assets/uploads
 public_folder: /assets/uploads
