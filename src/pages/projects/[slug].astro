@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -20,10 +20,13 @@ const { project, prev, next } = Astro.props;
 const { title, cover, tags, stack, date, description, links } = project.data;
 const { Content } = await render(project);
 
+const site = await getEntry('site', 'config');
+const { name } = site!.data;
+
 const formattedDate = date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long' });
 ---
 
-<BaseLayout title={`${title} — Matin Monshizadeh`} description={description}>
+<BaseLayout title={`${title} — ${name}`} description={description}>
 
   <!-- Cover -->
   <div class="w-full aspect-video max-h-[520px] overflow-hidden bg-bg-elevated">

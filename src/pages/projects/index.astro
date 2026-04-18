@@ -1,15 +1,18 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectGrid from '../../components/ProjectGrid.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
 const allProjects = await getCollection('projects');
 const university  = allProjects.filter(p => p.data.type === 'university');
 const games       = allProjects.filter(p => p.data.type === 'game');
+
+const site = await getEntry('site', 'config');
+const { name } = site!.data;
 ---
 
 <BaseLayout
-  title="Projects — Matin Monshizadeh"
+  title={`Projects — ${name}`}
   description="University research projects in computer vision and graphics, plus interactive browser games."
 >
 
