@@ -2,11 +2,11 @@
 photo: ""
 education:
   - degree: M.Sc. Artificial Intelligence
-    institution: Placeholder University
-    year: 2023–present
+    institution: University of Bologna
+    year: 2025–present
   - degree: B.Sc. Computer Engineering
-    institution: Placeholder University
-    year: 2019–2023
+    institution: Shiraz University
+    year: 2020–2024
 experience:
   - role: Research Assistant
     company: Placeholder Lab
