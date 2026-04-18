@@ -14,10 +14,11 @@ const year = date.getFullYear();
 ---
 
 <article class="group flex flex-col bg-bg-elevated border border-bg-border rounded-lg overflow-hidden transition-all duration-200 hover:border-accent/40 hover:shadow-[0_0_20px_rgba(63,224,197,0.08)] focus-within:border-accent/40">
-  <!-- Cover image -->
+  <!-- Cover — explicit 16:9 -->
   <a
     href={`/projects/${slug}`}
-    class="block aspect-video overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-0"
+    class="block w-full overflow-hidden"
+    style="aspect-ratio: 16/9;"
     tabindex="-1"
     aria-hidden="true"
   >
@@ -33,11 +34,12 @@ const year = date.getFullYear();
 
   <!-- Content -->
   <div class="flex flex-col flex-1 p-5 gap-3">
-    <div class="flex items-start justify-between gap-2">
-      <h3 class="font-heading font-semibold text-fg-primary text-base leading-snug">
+    <!-- min-w-0 on the flex row prevents long titles from overflowing -->
+    <div class="flex items-start justify-between gap-2 min-w-0">
+      <h3 class="font-heading font-semibold text-fg-primary text-base leading-snug min-w-0">
         <a
           href={`/projects/${slug}`}
-          class="hover:text-accent transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 rounded-sm"
+          class="hover:text-accent transition-colors duration-150 rounded-sm"
         >
           {title}
         </a>
@@ -49,7 +51,6 @@ const year = date.getFullYear();
       {description}
     </p>
 
-    <!-- Tags -->
     <ul class="flex flex-wrap gap-2 list-none m-0 p-0 mt-auto pt-1" role="list">
       {tags.slice(0, 4).map(tag => (
         <li>
@@ -60,13 +61,12 @@ const year = date.getFullYear();
       ))}
     </ul>
 
-    <!-- Play button for games -->
     {links?.play && (
       <a
         href={links.play}
         target="_blank"
         rel="noopener noreferrer"
-        class="mt-2 inline-flex items-center justify-center gap-2 w-full min-h-[44px] px-4 py-2 border border-accent text-accent font-sans text-sm font-medium rounded hover:bg-accent hover:text-bg-base transition-all duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+        class="mt-2 inline-flex items-center justify-center gap-2 w-full min-h-[44px] px-4 py-2 border border-accent text-accent font-sans text-sm font-medium rounded hover:bg-accent hover:text-bg-base transition-all duration-150"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <polygon points="5,3 19,12 5,21"/>

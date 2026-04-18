@@ -41,14 +41,14 @@ const featured    = allProjects.filter(p => p.data.featured);
         <div class="flex flex-wrap gap-4">
           <a
             href="/projects"
-            class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 bg-accent text-bg-base font-sans font-medium text-sm rounded hover:bg-accent-light transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+            class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 bg-accent text-bg-base font-sans font-medium text-sm rounded hover:bg-accent-light transition-colors duration-150 rounded-sm"
           >
             View Projects
           </a>
           <a
             href={cv}
             download
-            class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 border border-accent text-accent font-sans font-medium text-sm rounded hover:bg-accent hover:text-bg-base transition-all duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+            class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 border border-accent text-accent font-sans font-medium text-sm rounded hover:bg-accent hover:text-bg-base transition-all duration-150 rounded-sm"
           >
             Download CV
           </a>
@@ -85,7 +85,7 @@ const featured    = allProjects.filter(p => p.data.featured);
           </h2>
           <a
             href="/projects"
-            class="font-sans text-accent text-sm hover:text-accent-light transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 rounded-sm whitespace-nowrap ml-4"
+            class="font-sans text-accent text-sm hover:text-accent-light transition-colors duration-150 rounded-sm rounded-sm whitespace-nowrap ml-4"
           >
             See all →
           </a>
