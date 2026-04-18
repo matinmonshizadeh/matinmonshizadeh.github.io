@@ -452,4 +452,3 @@ Use Chrome DevTools device toolbar or actual devices. No phase is "done" until a
 - When adding dependencies, justify each one and prefer the Astro-native solution where available.
 
 ---
-
