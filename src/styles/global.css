@@ -1,1 +1,73 @@
 @import "tailwindcss";
+
+/* ── Fonts ── */
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/600.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/jetbrains-mono/400.css";
+
+/* ── Design tokens ── */
+@theme {
+  /* Backgrounds */
+  --color-bg-base:     #0A1118;
+  --color-bg-elevated: #0F1A22;
+  --color-bg-border:   #16222C;
+
+  /* Foregrounds */
+  --color-fg-primary:   #E8F4F4;
+  --color-fg-secondary: #9BB3B8;
+  --color-fg-tertiary:  #5A6F75;
+
+  /* Accent */
+  --color-accent:       #3FE0C5;
+  --color-accent-light: #6FE8D4;
+  --color-accent-dark:  #1FA891;
+
+  /* Atmospheric */
+  --color-mist:   #4A7A85;
+  --color-shadow: #1B2F3A;
+
+  /* Fonts */
+  --font-sans:    'Inter', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+/* ── Base ── */
+@layer base {
+  html {
+    background-color: #0A1118;
+    color: #E8F4F4;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  code, pre, kbd {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  :focus-visible {
+    outline: 2px solid #3FE0C5;
+    outline-offset: 2px;
+  }
+}
+
+/* ── Utilities ── */
+@utility glow-accent {
+  box-shadow: 0 0 20px rgba(63, 224, 197, 0.4);
+}
+
+@utility text-glow {
+  text-shadow: 0 0 20px rgba(63, 224, 197, 0.5);
+}
+
+@utility hero-radial {
+  background: radial-gradient(ellipse at center, #1B2F3A 0%, #0A1118 70%);
+}

@@ -1,14 +1,15 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Matin Monshizadeh</title>
-  </head>
-  <body>
-    <h1>Matin Monshizadeh</h1>
-    <p>Portfolio — coming soon.</p>
-  </body>
-</html>
+
+<BaseLayout title="Matin Monshizadeh">
+  <div class="flex flex-col items-center justify-center min-h-[60vh] px-6 text-center">
+    <h1 class="font-heading text-5xl font-bold text-fg-primary mb-4">
+      Matin Monshizadeh
+    </h1>
+    <p class="font-sans text-fg-secondary text-lg max-w-md mb-2">
+      AI Master's student · Computer Vision & Graphics
+    </p>
+    <span class="font-mono text-accent text-sm">Portfolio coming soon</span>
+  </div>
+</BaseLayout>
