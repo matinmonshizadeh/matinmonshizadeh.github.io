@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectGrid from '../components/ProjectGrid.astro';
+import ShaderCanvas from '../components/ShaderCanvas';
 import { getEntry, getCollection } from 'astro:content';
 
 const site     = await getEntry('site', 'config');
@@ -17,14 +18,20 @@ const featured    = allProjects.filter(p => p.data.featured);
     class="relative min-h-[calc(100vh-4rem)] flex items-center hero-radial overflow-hidden"
     aria-label="Introduction"
   >
-    <!-- Static particle atmosphere (replaced by WebGL in Phase 5) -->
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-accent/5 blur-3xl"></div>
-      <div class="absolute bottom-1/3 right-1/3 w-48 h-48 rounded-full bg-mist/10 blur-2xl"></div>
-      <div class="absolute top-1/2 right-1/6 w-32 h-32 rounded-full bg-accent/8 blur-2xl"></div>
+    <!-- WebGL canvas — desktop & tablet (≥768px). The component itself also
+         guards against <768px and prefers-reduced-motion internally. -->
+    <div class="absolute inset-0 hidden md:block" aria-hidden="true">
+      <ShaderCanvas client:load />
     </div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-12 md:py-20 lg:py-28 w-full">
+    <!-- Static CSS fallback — shown on mobile (<768px) or when JS is off -->
+    <div class="absolute inset-0 md:hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute top-1/4 right-1/4 w-56 h-56 rounded-full bg-accent/5 blur-3xl"></div>
+      <div class="absolute bottom-1/3 right-1/6 w-40 h-40 rounded-full bg-mist/10 blur-2xl"></div>
+    </div>
+
+    <!-- Text content — always above canvas -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-12 md:py-20 lg:py-28 w-full">
       <div class="max-w-2xl">
         <p class="font-mono text-accent text-sm mb-4 tracking-wide">
           {role}
@@ -41,14 +48,14 @@ const featured    = allProjects.filter(p => p.data.featured);
         <div class="flex flex-wrap gap-4">
           <a
             href="/projects"
-            class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 bg-accent text-bg-base font-sans font-medium text-sm rounded hover:bg-accent-light transition-colors duration-150 rounded-sm"
+            class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 bg-accent text-bg-base font-sans font-medium text-sm rounded hover:bg-accent-light transition-colors duration-150"
           >
             View Projects
           </a>
           <a
             href={cv}
             download
-            class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 border border-accent text-accent font-sans font-medium text-sm rounded hover:bg-accent hover:text-bg-base transition-all duration-150 rounded-sm"
+            class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 border border-accent text-accent font-sans font-medium text-sm rounded hover:bg-accent hover:text-bg-base transition-all duration-150"
           >
             Download CV
           </a>
@@ -85,7 +92,7 @@ const featured    = allProjects.filter(p => p.data.featured);
           </h2>
           <a
             href="/projects"
-            class="font-sans text-accent text-sm hover:text-accent-light transition-colors duration-150 rounded-sm rounded-sm whitespace-nowrap ml-4"
+            class="font-sans text-accent text-sm hover:text-accent-light transition-colors duration-150 whitespace-nowrap ml-4"
           >
             See all →
           </a>
