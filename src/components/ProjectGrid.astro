@@ -1,0 +1,42 @@
+---
+import ProjectCard from './ProjectCard.astro';
+
+interface ProjectEntry {
+  id:   string;
+  data: {
+    title:       string;
+    cover:       string;
+    description: string;
+    tags:        string[];
+    date:        Date;
+    featured:    boolean;
+    links?:      { play?: string };
+  };
+}
+
+interface Props {
+  projects:  ProjectEntry[];
+}
+
+const { projects } = Astro.props;
+const sorted = [...projects].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<ul
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 list-none m-0 p-0"
+  role="list"
+>
+  {sorted.map(project => (
+    <li>
+      <ProjectCard
+        slug={project.id}
+        title={project.data.title}
+        cover={project.data.cover}
+        description={project.data.description}
+        tags={project.data.tags}
+        date={project.data.date}
+        links={project.data.links}
+      />
+    </li>
+  ))}
+</ul>

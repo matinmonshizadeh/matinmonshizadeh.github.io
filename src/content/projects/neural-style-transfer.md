@@ -2,7 +2,7 @@
 title: "Neural Style Transfer with Adaptive Normalization"
 type: university
 date: 2023-11-01
-cover: /src/assets/projects/neural-style-transfer-cover.svg
+cover: /images/projects/neural-style-transfer-cover.svg
 tags: ["Image Processing", "Generative Models", "PyTorch"]
 stack: ["Python", "PyTorch", "PIL", "NumPy"]
 description: "Fast arbitrary style transfer using adaptive instance normalization, supporting real-time video stylization at 20ms per frame."

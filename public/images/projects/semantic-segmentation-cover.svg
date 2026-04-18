@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#0F1A22"/>
+  <rect x="0" y="0" width="1200" height="675" fill="url(#g)"/>
+  <defs>
+    <radialGradient id="g" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#1B2F3A"/>
+      <stop offset="100%" stop-color="#0A1118"/>
+    </radialGradient>
+  </defs>
+  <rect x="100" y="150" width="200" height="180" rx="4" fill="#1FA891" opacity="0.3"/>
+  <rect x="320" y="120" width="260" height="210" rx="4" fill="#3FE0C5" opacity="0.2"/>
+  <rect x="600" y="160" width="180" height="160" rx="4" fill="#4A7A85" opacity="0.35"/>
+  <rect x="800" y="130" width="220" height="200" rx="4" fill="#1FA891" opacity="0.25"/>
+  <rect x="100" y="350" width="920" height="4" rx="2" fill="#3FE0C5" opacity="0.15"/>
+  <text x="600" y="560" font-family="monospace" font-size="18" fill="#3FE0C5" opacity="0.6" text-anchor="middle">[PLACEHOLDER] Semantic Segmentation</text>
+</svg>

@@ -1,15 +1,98 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+import { getEntry, getCollection } from 'astro:content';
+
+const site     = await getEntry('site', 'config');
+const { name, role, tagline, intro, cv } = site!.data;
+
+const allProjects = await getCollection('projects');
+const featured    = allProjects.filter(p => p.data.featured);
 ---
 
-<BaseLayout title="Matin Monshizadeh">
-  <div class="flex flex-col items-center justify-center min-h-[60vh] px-6 text-center">
-    <h1 class="font-heading text-5xl font-bold text-fg-primary mb-4">
-      Matin Monshizadeh
-    </h1>
-    <p class="font-sans text-fg-secondary text-lg max-w-md mb-2">
-      AI Master's student · Computer Vision & Graphics
-    </p>
-    <span class="font-mono text-accent text-sm">Portfolio coming soon</span>
-  </div>
+<BaseLayout title={name} description={tagline}>
+
+  <!-- ── Hero ── -->
+  <section
+    class="relative min-h-[calc(100vh-4rem)] flex items-center hero-radial overflow-hidden"
+    aria-label="Introduction"
+  >
+    <!-- Static particle atmosphere (replaced by WebGL in Phase 5) -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-accent/5 blur-3xl"></div>
+      <div class="absolute bottom-1/3 right-1/3 w-48 h-48 rounded-full bg-mist/10 blur-2xl"></div>
+      <div class="absolute top-1/2 right-1/6 w-32 h-32 rounded-full bg-accent/8 blur-2xl"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-12 md:py-20 lg:py-28 w-full">
+      <div class="max-w-2xl">
+        <p class="font-mono text-accent text-sm mb-4 tracking-wide">
+          {role}
+        </p>
+
+        <h1 class="font-heading font-bold text-fg-primary text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6">
+          {name}
+        </h1>
+
+        <p class="font-sans text-fg-secondary text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
+          {tagline}
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="/projects"
+            class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 bg-accent text-bg-base font-sans font-medium text-sm rounded hover:bg-accent-light transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+          >
+            View Projects
+          </a>
+          <a
+            href={cv}
+            download
+            class="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 border border-accent text-accent font-sans font-medium text-sm rounded hover:bg-accent hover:text-bg-base transition-all duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+          >
+            Download CV
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Intro strip ── -->
+  <section
+    class="py-12 md:py-20 border-t border-bg-border"
+    aria-labelledby="intro-heading"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 id="intro-heading" class="sr-only">About me</h2>
+        <p class="font-sans text-fg-secondary text-base md:text-lg leading-relaxed">
+          {intro}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Featured projects ── -->
+  {featured.length > 0 && (
+    <section
+      class="py-12 md:py-20 border-t border-bg-border"
+      aria-labelledby="featured-heading"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
+        <div class="flex items-end justify-between mb-8 md:mb-10">
+          <h2 id="featured-heading" class="font-heading font-semibold text-fg-primary text-2xl md:text-3xl lg:text-4xl">
+            Featured Projects
+          </h2>
+          <a
+            href="/projects"
+            class="font-sans text-accent text-sm hover:text-accent-light transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 rounded-sm whitespace-nowrap ml-4"
+          >
+            See all →
+          </a>
+        </div>
+        <ProjectGrid projects={featured} />
+      </div>
+    </section>
+  )}
+
 </BaseLayout>

@@ -1,0 +1,57 @@
+---
+interface EducationItem {
+  degree:      string;
+  institution: string;
+  year:        string;
+}
+
+interface ExperienceItem {
+  role:    string;
+  company: string;
+  period:  string;
+  bullets: string[];
+}
+
+interface Props {
+  items: EducationItem[] | ExperienceItem[];
+  type: 'education' | 'experience';
+}
+
+const { items, type } = Astro.props;
+---
+
+<ol class="relative border-l border-bg-border ml-3 space-y-8 list-none m-0 p-0">
+  {items.map((item) => (
+    <li class="ml-6">
+      <!-- Teal dot marker -->
+      <span
+        class="absolute -left-[7px] flex items-center justify-center w-3.5 h-3.5 rounded-full bg-bg-base border-2 border-accent"
+        aria-hidden="true"
+      ></span>
+
+      {type === 'education' ? (
+        <div>
+          <p class="font-mono text-xs text-accent mb-1">{(item as EducationItem).year}</p>
+          <h3 class="font-heading font-semibold text-fg-primary text-base">{(item as EducationItem).degree}</h3>
+          <p class="font-sans text-fg-secondary text-sm">{(item as EducationItem).institution}</p>
+        </div>
+      ) : (
+        <div>
+          <p class="font-mono text-xs text-accent mb-1">{(item as ExperienceItem).period}</p>
+          <h3 class="font-heading font-semibold text-fg-primary text-base">{(item as ExperienceItem).role}</h3>
+          <p class="font-sans text-fg-secondary text-sm mb-2">{(item as ExperienceItem).company}</p>
+          {(item as ExperienceItem).bullets?.length > 0 && (
+            <ul class="space-y-1 list-none m-0 p-0">
+              {(item as ExperienceItem).bullets.map(bullet => (
+                <li class="font-sans text-fg-secondary text-sm flex gap-2">
+                  <span class="text-accent shrink-0 mt-0.5" aria-hidden="true">·</span>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </li>
+  ))}
+</ol>

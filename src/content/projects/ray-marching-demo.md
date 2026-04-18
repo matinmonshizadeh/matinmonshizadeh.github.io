@@ -2,7 +2,7 @@
 title: "Ray Marching WebGL Demo"
 type: game
 date: 2024-02-01
-cover: /src/assets/projects/ray-marching-cover.svg
+cover: /images/projects/ray-marching-cover.svg
 tags: ["WebGL", "GLSL", "Computer Graphics", "Real-Time Rendering"]
 stack: ["JavaScript", "WebGL", "GLSL"]
 description: "Interactive ray marching renderer running entirely in a GLSL fragment shader, with procedural terrain, soft shadows, and atmospheric fog."

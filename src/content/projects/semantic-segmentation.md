@@ -2,7 +2,7 @@
 title: "Real-Time Semantic Segmentation"
 type: university
 date: 2024-05-01
-cover: /src/assets/projects/semantic-segmentation-cover.svg
+cover: /images/projects/semantic-segmentation-cover.svg
 tags: ["Computer Vision", "Deep Learning", "PyTorch"]
 stack: ["Python", "PyTorch", "OpenCV", "CUDA"]
 description: "Lightweight encoder-decoder network achieving real-time semantic segmentation on urban driving scenes at 38 FPS."
