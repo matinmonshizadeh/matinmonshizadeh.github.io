@@ -13,7 +13,7 @@ const { slug, title, cover, description, tags, date, links } = Astro.props;
 const year = date.getFullYear();
 ---
 
-<article class="group flex flex-col bg-bg-elevated border border-bg-border rounded-lg overflow-hidden transition-all duration-200 hover:border-accent/40 hover:shadow-[0_0_20px_rgba(63,224,197,0.08)] focus-within:border-accent/40">
+<article class="group flex flex-col bg-bg-elevated border border-bg-border rounded-lg overflow-hidden transition-all duration-200 hover:border-accent/40 hover:shadow-[0_0_20px_rgba(63,224,197,0.15)] focus-within:border-accent/40">
   <!-- Cover — explicit 16:9 -->
   <a
     href={`/projects/${slug}`}

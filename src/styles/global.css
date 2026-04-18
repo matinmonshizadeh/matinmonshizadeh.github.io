@@ -74,5 +74,32 @@
 }
 
 @utility hero-radial {
-  background: radial-gradient(ellipse at center, #1B2F3A 0%, #0A1118 70%);
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, #1B2F3A 0%, #0A1118 65%);
+}
+
+/* ── Scroll-in animations ── */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Disable all motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

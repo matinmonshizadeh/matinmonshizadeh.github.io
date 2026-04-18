@@ -30,7 +30,7 @@ const games       = allProjects.filter(p => p.data.type === 'game');
     <!-- University projects -->
     {university.length > 0 && (
       <section class="py-12 md:py-20" aria-labelledby="university-heading">
-        <div class="mb-8 md:mb-10">
+        <div class="mb-8 md:mb-10" data-animate>
           <h2 id="university-heading" class="font-heading font-semibold text-fg-primary text-2xl md:text-3xl mb-2">
             University Projects
           </h2>
@@ -38,7 +38,9 @@ const games       = allProjects.filter(p => p.data.type === 'game');
             Research and coursework from my master's programme.
           </p>
         </div>
-        <ProjectGrid projects={university} />
+        <div data-animate>
+          <ProjectGrid projects={university} />
+        </div>
       </section>
     )}
 
@@ -50,7 +52,7 @@ const games       = allProjects.filter(p => p.data.type === 'game');
     <!-- Games -->
     {games.length > 0 && (
       <section class="py-12 md:py-20" aria-labelledby="games-heading">
-        <div class="mb-8 md:mb-10">
+        <div class="mb-8 md:mb-10" data-animate>
           <h2 id="games-heading" class="font-heading font-semibold text-fg-primary text-2xl md:text-3xl mb-2">
             Fun Games
           </h2>
@@ -58,7 +60,9 @@ const games       = allProjects.filter(p => p.data.type === 'game');
             Interactive browser experiments and playable graphics demos.
           </p>
         </div>
-        <ProjectGrid projects={games} />
+        <div data-animate>
+          <ProjectGrid projects={games} />
+        </div>
       </section>
     )}
 
