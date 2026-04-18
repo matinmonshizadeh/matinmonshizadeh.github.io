@@ -37,9 +37,11 @@ collections:
         format: "YYYY-MM-DD"
 
       - name: cover
-        widget: string
-        label: Cover Image Path
-        hint: "e.g. /images/projects/my-project.jpg"
+        widget: image
+        label: Cover Image
+        hint: "Upload a 16:9 image (JPG, PNG, SVG). Stored in public/images/projects/."
+        media_folder: /public/images/projects
+        public_folder: /images/projects
 
       - name: description
         widget: text
@@ -94,6 +96,20 @@ collections:
           - { name: linkedin, widget: string, label: "LinkedIn profile URL" }
           - { name: scholar,  widget: string, label: "Google Scholar URL" }
           - { name: cv,       widget: string, label: "CV path (e.g. /cv.pdf)" }
+          - name: projects_page_desc
+            widget: text
+            label: "Projects page — subtitle"
+            hint: "Shown below the 'Projects' heading."
+          - name: university_section_desc
+            widget: string
+            label: "University section — description"
+          - name: games_section_desc
+            widget: string
+            label: "Games section — description"
+          - name: footer_text
+            widget: string
+            label: "Footer credit text"
+            hint: "e.g. Built with Astro, hosted on GitHub Pages"
 
   # ── About ──────────────────────────────────────────────────────────────────
   - name: about
@@ -104,10 +120,12 @@ collections:
         file: src/content/about/about.md
         fields:
           - name: photo
-            widget: string
-            label: Photo path
+            widget: image
+            label: Profile Photo
             required: false
-            hint: "e.g. /images/photo.jpg"
+            hint: "Upload your photo. Stored in public/images/."
+            media_folder: /public/images
+            public_folder: /images
 
           - name: education
             widget: list

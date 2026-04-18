@@ -8,4 +8,8 @@ github: "https://github.com/matinmonshizadeh"
 linkedin: "https://linkedin.com/in/matinmonshizadeh"
 scholar: "https://scholar.google.com/citations?user=matinmonshizadeh"
 cv: "/cv.pdf"
+projects_page_desc: "Research, coursework, and side projects across computer vision, image processing, and graphics."
+university_section_desc: "Research and coursework from my master's programme."
+games_section_desc: "Interactive browser experiments and playable graphics demos."
+footer_text: "Built with Astro, hosted on GitHub Pages"
 ---

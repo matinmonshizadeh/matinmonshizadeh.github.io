@@ -2,7 +2,7 @@
 import { getEntry } from 'astro:content';
 
 const site = await getEntry('site', 'config');
-const { name, github, linkedin, scholar, email } = site!.data;
+const { name, github, linkedin, scholar, email, footer_text } = site!.data;
 
 const year = new Date().getFullYear();
 
@@ -33,7 +33,7 @@ const socials = [
 <footer class="border-t border-bg-border mt-auto">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
     <p class="font-sans text-fg-secondary text-sm text-center sm:text-left">
-      © {year} {name} · Built with Astro, hosted on GitHub Pages
+      © {year} {name} · {footer_text ?? "Built with Astro, hosted on GitHub Pages"}
     </p>
 
     <ul class="flex items-center gap-1 list-none m-0 p-0" role="list">

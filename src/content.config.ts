@@ -53,6 +53,10 @@ const site = defineCollection({
     linkedin: z.string().url(),
     scholar:  z.string().url(),
     cv:       z.string(),
+    projects_page_desc:     z.string().optional(),
+    university_section_desc: z.string().optional(),
+    games_section_desc:     z.string().optional(),
+    footer_text:            z.string().optional(),
   }),
 });
 
