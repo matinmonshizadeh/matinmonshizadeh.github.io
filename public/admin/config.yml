@@ -2,8 +2,7 @@ backend:
   name: github
   repo: matinmonshizadeh/matinmonshizadeh.github.io
   branch: main
-  auth_type: pkce
-  app_id: Ov23liTdfreQWl0Bq7JJ
+  base_url: https://portfolio-cms-oauth.vercel.app
 
 media_folder: src/assets/uploads
 public_folder: /assets/uploads
