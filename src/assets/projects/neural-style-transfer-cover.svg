@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#0A1118"/>
+  <defs>
+    <radialGradient id="g" cx="40%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#1B2F3A"/>
+      <stop offset="100%" stop-color="#0A1118"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g)"/>
+  <circle cx="300" cy="337" r="160" fill="none" stroke="#3FE0C5" stroke-width="1.5" opacity="0.2"/>
+  <circle cx="300" cy="337" r="120" fill="none" stroke="#3FE0C5" stroke-width="1" opacity="0.15"/>
+  <circle cx="900" cy="337" r="160" fill="none" stroke="#4A7A85" stroke-width="1.5" opacity="0.2"/>
+  <circle cx="900" cy="337" r="120" fill="none" stroke="#4A7A85" stroke-width="1" opacity="0.15"/>
+  <line x1="460" y1="337" x2="740" y2="337" stroke="#3FE0C5" stroke-width="1" opacity="0.3" stroke-dasharray="8 4"/>
+  <circle cx="600" cy="337" r="40" fill="#1FA891" opacity="0.2"/>
+  <text x="600" y="590" font-family="monospace" font-size="18" fill="#3FE0C5" opacity="0.6" text-anchor="middle">[PLACEHOLDER] Neural Style Transfer</text>
+</svg>
