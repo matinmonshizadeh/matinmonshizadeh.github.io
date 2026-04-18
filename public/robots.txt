@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://matinmonshizadeh.github.io/sitemap-index.xml

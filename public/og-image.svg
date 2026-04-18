@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="60%">
+      <stop offset="0%"  stop-color="#1B2F3A"/>
+      <stop offset="100%" stop-color="#0A1118"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Accent line -->
+  <rect x="80" y="280" width="3" height="90" fill="#3FE0C5" rx="1"/>
+
+  <!-- Name -->
+  <text x="108" y="330" font-family="system-ui, -apple-system, sans-serif"
+        font-size="64" font-weight="700" fill="#E8F4F4" letter-spacing="-1">
+    Matin Monshizadeh
+  </text>
+
+  <!-- Role -->
+  <text x="108" y="378" font-family="system-ui, -apple-system, sans-serif"
+        font-size="26" font-weight="400" fill="#3FE0C5" letter-spacing="1">
+    AI Master's Student · Computer Vision &amp; Graphics
+  </text>
+
+  <!-- Domain -->
+  <text x="108" y="530" font-family="ui-monospace, monospace"
+        font-size="20" fill="#5A6F75">
+    matinmonshizadeh.github.io
+  </text>
+
+  <!-- Decorative dots -->
+  <circle cx="1080" cy="120" r="120" fill="#3FE0C5" fill-opacity="0.04"/>
+  <circle cx="1100" cy="500" r="70"  fill="#3FE0C5" fill-opacity="0.06"/>
+  <circle cx="950"  cy="80"  r="40"  fill="#3FE0C5" fill-opacity="0.08"/>
+</svg>
