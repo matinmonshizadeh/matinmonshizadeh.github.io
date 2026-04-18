@@ -1,0 +1,148 @@
+backend:
+  name: github
+  repo: matinmonshizadeh/matinmonshizadeh.github.io
+  branch: main
+  auth_type: pkce
+  app_id: REPLACE_WITH_YOUR_CLIENT_ID
+
+media_folder: src/assets/uploads
+public_folder: /assets/uploads
+
+collections:
+
+  # ── Projects ──────────────────────────────────────────────────────────────
+  - name: projects
+    label: Projects
+    folder: src/content/projects
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - name: title
+        widget: string
+        label: Title
+
+      - name: type
+        widget: select
+        label: Type
+        options:
+          - { label: "University Project", value: university }
+          - { label: "Fun Game", value: game }
+
+      - name: date
+        widget: datetime
+        label: Date
+        date_only: true
+        format: "YYYY-MM-DD"
+
+      - name: cover
+        widget: string
+        label: Cover Image Path
+        hint: "e.g. /images/projects/my-project.jpg"
+
+      - name: description
+        widget: text
+        label: Short Description
+        hint: "One or two sentences shown on cards."
+
+      - name: featured
+        widget: boolean
+        label: Featured on Home Page
+        default: false
+
+      - name: tags
+        widget: list
+        label: Tags
+        hint: "Topics shown as badges (e.g. Computer Vision, PyTorch)"
+
+      - name: stack
+        widget: list
+        label: Tech Stack
+        hint: "Libraries and tools used"
+
+      - name: links
+        widget: object
+        label: Links
+        required: false
+        collapsed: true
+        fields:
+          - { name: github, widget: string, label: GitHub URL, required: false }
+          - { name: demo,   widget: string, label: Live Demo URL, required: false }
+          - { name: paper,  widget: string, label: Paper URL, required: false }
+          - { name: play,   widget: string, label: Play URL (in-browser), required: false }
+
+      - name: body
+        widget: markdown
+        label: Content
+        hint: "Sections: Problem, Approach, Results"
+
+  # ── Site Settings ──────────────────────────────────────────────────────────
+  - name: site
+    label: Site Settings
+    files:
+      - name: config
+        label: Global Config
+        file: src/content/site/config.md
+        fields:
+          - { name: name,     widget: string, label: "Full Name" }
+          - { name: role,     widget: string, label: "Role line (shown in hero)" }
+          - { name: tagline,  widget: string, label: "Hero tagline" }
+          - { name: intro,    widget: text,   label: "Intro strip paragraph" }
+          - { name: email,    widget: string, label: "Email address" }
+          - { name: github,   widget: string, label: "GitHub profile URL" }
+          - { name: linkedin, widget: string, label: "LinkedIn profile URL" }
+          - { name: scholar,  widget: string, label: "Google Scholar URL" }
+          - { name: cv,       widget: string, label: "CV path (e.g. /cv.pdf)" }
+
+  # ── About ──────────────────────────────────────────────────────────────────
+  - name: about
+    label: About
+    files:
+      - name: about
+        label: About Page
+        file: src/content/about/about.md
+        fields:
+          - name: photo
+            widget: string
+            label: Photo path
+            required: false
+            hint: "e.g. /images/photo.jpg"
+
+          - name: education
+            widget: list
+            label: Education
+            fields:
+              - { name: degree,      widget: string, label: Degree }
+              - { name: institution, widget: string, label: Institution }
+              - { name: year,        widget: string, label: Year / Period }
+
+          - name: experience
+            widget: list
+            label: Experience
+            fields:
+              - { name: role,    widget: string, label: Role }
+              - { name: company, widget: string, label: Organisation }
+              - { name: period,  widget: string, label: Period }
+              - name: bullets
+                widget: list
+                label: Bullet points
+
+          - name: skills
+            widget: object
+            label: Skills
+            fields:
+              - { name: Languages, widget: list, label: Languages }
+              - { name: "CV / ML", widget: list, label: "CV / ML" }
+              - { name: Graphics,  widget: list, label: Graphics }
+              - { name: Tools,     widget: list, label: Tools }
+
+          - name: awards
+            widget: list
+            label: Awards & Certifications
+            required: false
+
+          - name: body
+            widget: markdown
+            label: Bio (paragraphs)
