@@ -115,12 +115,16 @@
   50%       { filter: drop-shadow(0 0 6px rgba(63, 224, 197, 0.8)); }
 }
 
-.nav-deer {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-  object-position: center;
-  display: block;
+/*
+  Clip container: fixed 44×44 viewport cropped to the deer region.
+  All animation + glow lives here so transform-origin is the visible
+  deer center, not the oversized underlying image.
+*/
+.nav-deer-clip {
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  position: relative;
   flex-shrink: 0;
   filter: drop-shadow(0 0 6px rgba(63, 224, 197, 0.6));
   animation: deer-breathe 3.5s ease-in-out infinite,
@@ -129,16 +133,33 @@
   transition: transform 200ms ease-out, filter 200ms ease-out;
 }
 
-.nav-home-link:hover .nav-deer,
-.nav-home-link:focus-visible .nav-deer {
+/* Img is scaled up and panned to show just the deer */
+.nav-deer {
+  position: absolute;
+  width: 160px;
+  height: auto;
+  /* Deer is ~42% across, ~57% down the 666×375 canvas.
+     At 160×90px rendered: deer-center ≈ (67px, 51px).
+     Offset so that point lands at the clip center (22px, 22px). */
+  left: -45px;
+  top: -29px;
+}
+
+.nav-home-link:hover .nav-deer-clip,
+.nav-home-link:focus-visible .nav-deer-clip {
   animation: none;
   transform: scale(1.15);
   filter: drop-shadow(0 0 12px rgba(63, 224, 197, 0.95));
 }
 
 @media (max-width: 767px) {
+  .nav-deer-clip {
+    width: 38px;
+    height: 38px;
+  }
   .nav-deer {
-    width: 32px;
-    height: 32px;
+    width: 138px;
+    left: -39px;
+    top: -25px;
   }
 }
