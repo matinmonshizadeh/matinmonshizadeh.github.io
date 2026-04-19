@@ -5,7 +5,7 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
     title:       z.string(),
-    type:        z.enum(['university', 'game']),
+    type:        z.enum(['university', 'game', 'independent']),
     date:        z.coerce.date(),
     cover:       z.string(),
     tags:        z.array(z.string()),
@@ -53,10 +53,11 @@ const site = defineCollection({
     linkedin: z.string().url(),
     scholar:  z.string().url(),
     cv:       z.string(),
-    projects_page_desc:     z.string().optional(),
+    projects_page_desc:      z.string().optional(),
     university_section_desc: z.string().optional(),
-    games_section_desc:     z.string().optional(),
-    footer_text:            z.string().optional(),
+    independent_section_desc: z.string().optional(),
+    games_section_desc:      z.string().optional(),
+    footer_text:             z.string().optional(),
   }),
 });
 

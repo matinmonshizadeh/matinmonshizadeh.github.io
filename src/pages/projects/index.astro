@@ -3,12 +3,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectGrid from '../../components/ProjectGrid.astro';
 import { getCollection, getEntry } from 'astro:content';
 
-const allProjects = await getCollection('projects');
-const university  = allProjects.filter(p => p.data.type === 'university');
-const games       = allProjects.filter(p => p.data.type === 'game');
+const allProjects  = await getCollection('projects');
+const university   = allProjects.filter(p => p.data.type === 'university');
+const independent  = allProjects.filter(p => p.data.type === 'independent');
+const games        = allProjects.filter(p => p.data.type === 'game');
 
 const site = await getEntry('site', 'config');
-const { name, projects_page_desc, university_section_desc, games_section_desc } = site!.data;
+const { name, projects_page_desc, university_section_desc, independent_section_desc, games_section_desc } = site!.data;
 ---
 
 <BaseLayout
@@ -47,8 +48,28 @@ const { name, projects_page_desc, university_section_desc, games_section_desc } 
       </section>
     )}
 
-    <!-- Divider between sections -->
-    {university.length > 0 && games.length > 0 && (
+    <!-- Divider: university → independent -->
+    {university.length > 0 && (
+      <hr class="border-bg-border" />
+    )}
+
+    <!-- Independent projects (always shown) -->
+    <section class="py-12 md:py-20" aria-labelledby="independent-heading">
+      <div class="mb-8 md:mb-10" data-animate>
+        <h2 id="independent-heading" class="font-heading font-semibold text-fg-primary text-2xl md:text-3xl mb-2">
+          Independent Projects
+        </h2>
+        <p class="font-sans text-fg-secondary text-sm md:text-base">
+          {independent_section_desc ?? "Side projects, research explorations, and experiments I built on my own time."}
+        </p>
+      </div>
+      <div data-animate>
+        <ProjectGrid projects={independent} />
+      </div>
+    </section>
+
+    <!-- Divider: independent → games -->
+    {games.length > 0 && (
       <hr class="border-bg-border" />
     )}
 

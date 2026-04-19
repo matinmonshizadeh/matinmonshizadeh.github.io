@@ -10,6 +10,7 @@ scholar: "https://scholar.google.com/citations?user=matinmonshizadeh"
 cv: "/cv.pdf"
 projects_page_desc: "Research, coursework, and side projects across computer vision, image processing, and graphics."
 university_section_desc: "Research and coursework from my master's programme."
+independent_section_desc: "Side projects, research explorations, and experiments I built on my own time."
 games_section_desc: "Interactive browser experiments and playable graphics demos."
 footer_text: "Built with Astro, hosted on GitHub Pages"
 ---

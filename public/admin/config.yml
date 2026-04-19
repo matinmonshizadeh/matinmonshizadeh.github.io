@@ -26,9 +26,11 @@ collections:
       - name: type
         widget: select
         label: Type
+        default: university
         options:
-          - { label: "University Project", value: university }
-          - { label: "Fun Game", value: game }
+          - { label: "University Project",  value: university }
+          - { label: "Independent Project", value: independent }
+          - { label: "Fun Game",            value: game }
 
       - name: date
         widget: datetime
@@ -103,6 +105,9 @@ collections:
           - name: university_section_desc
             widget: string
             label: "University section — description"
+          - name: independent_section_desc
+            widget: string
+            label: "Independent Projects section — description"
           - name: games_section_desc
             widget: string
             label: "Games section — description"
