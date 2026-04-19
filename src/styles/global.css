@@ -103,3 +103,42 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Deer nav icon ── */
+@keyframes deer-breathe {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.04); }
+}
+
+@keyframes deer-glow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(63, 224, 197, 0.5)); }
+  50%       { filter: drop-shadow(0 0 6px rgba(63, 224, 197, 0.8)); }
+}
+
+.nav-deer {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(63, 224, 197, 0.6));
+  animation: deer-breathe 3.5s ease-in-out infinite,
+             deer-glow    3.5s ease-in-out infinite;
+  will-change: transform, filter;
+  transition: transform 200ms ease-out, filter 200ms ease-out;
+}
+
+.nav-home-link:hover .nav-deer,
+.nav-home-link:focus-visible .nav-deer {
+  animation: none;
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 12px rgba(63, 224, 197, 0.95));
+}
+
+@media (max-width: 767px) {
+  .nav-deer {
+    width: 32px;
+    height: 32px;
+  }
+}

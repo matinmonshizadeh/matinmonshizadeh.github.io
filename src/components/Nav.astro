@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import deerImg from '../assets/hero/deer.png';
 
 const site = await getEntry('site', 'config');
 const { name, cv } = site!.data;
@@ -22,9 +23,19 @@ const currentPath = Astro.url.pathname;
   >
     <a
       href="/"
-      class="font-heading font-semibold text-fg-primary hover:text-accent transition-colors duration-150 rounded-sm"
+      class="nav-home-link group flex items-center gap-2.5 rounded-sm"
     >
-      {name}
+      <img
+        src={deerImg.src}
+        width="36"
+        height="36"
+        alt=""
+        aria-hidden="true"
+        class="nav-deer"
+      />
+      <span class="font-heading font-semibold text-fg-primary group-hover:text-accent transition-colors duration-150">
+        {name}
+      </span>
     </a>
 
     <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0" role="list">
