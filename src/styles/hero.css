@@ -1,0 +1,176 @@
+/* ── Living Forest Hero ── */
+
+/* Layer 0: base forest image */
+.hero-forest-bg {
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+}
+
+/* Soft dark overlay to keep text readable */
+.hero-forest-overlay {
+  background: linear-gradient(
+    to right,
+    rgba(10, 17, 24, 0.82) 0%,
+    rgba(10, 17, 24, 0.55) 55%,
+    rgba(10, 17, 24, 0.25) 100%
+  );
+}
+
+/* Bottom fog fade into page background */
+.hero-forest-bottom-fade {
+  background: linear-gradient(to top, #0A1118 0%, transparent 100%);
+}
+
+/* ── Vignette ── */
+.hero-vignette {
+  background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 50%, rgba(10, 17, 24, 0.7) 100%);
+}
+
+/* ── Moss glow pulse ── */
+@keyframes moss-pulse {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50%       { opacity: 0.45; transform: scale(1.08); }
+}
+
+.moss-orb {
+  border-radius: 50%;
+  filter: blur(40px);
+  animation: moss-pulse 4s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+.moss-orb:nth-child(2) { animation-delay: -1.3s; }
+.moss-orb:nth-child(3) { animation-delay: -2.7s; }
+
+/* ── Fog sweep ── */
+@keyframes fog-drift {
+  0%   { transform: translateX(-8%) scaleX(1);   opacity: 0.18; }
+  50%  { transform: translateX(4%)  scaleX(1.04); opacity: 0.28; }
+  100% { transform: translateX(-8%) scaleX(1);   opacity: 0.18; }
+}
+
+@keyframes fog-drift-2 {
+  0%   { transform: translateX(6%)  scaleX(1);   opacity: 0.12; }
+  50%  { transform: translateX(-4%) scaleX(1.03); opacity: 0.22; }
+  100% { transform: translateX(6%)  scaleX(1);   opacity: 0.12; }
+}
+
+.fog-layer-1 {
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(74, 122, 133, 0.35) 40%,
+    rgba(74, 122, 133, 0.25) 70%,
+    transparent 100%
+  );
+  animation: fog-drift 12s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.fog-layer-2 {
+  background: linear-gradient(to bottom,
+    transparent 10%,
+    rgba(63, 224, 197, 0.08) 45%,
+    rgba(74, 122, 133, 0.15) 75%,
+    transparent 100%
+  );
+  animation: fog-drift-2 18s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* ── Light rays ── */
+@keyframes ray-flicker {
+  0%, 100% { opacity: 0.06; transform: scaleY(1)   rotate(var(--ray-angle)); }
+  30%       { opacity: 0.12; transform: scaleY(1.02) rotate(var(--ray-angle)); }
+  60%       { opacity: 0.04; transform: scaleY(0.98) rotate(var(--ray-angle)); }
+}
+
+.light-ray {
+  width: 2px;
+  transform-origin: top center;
+  transform: rotate(var(--ray-angle));
+  background: linear-gradient(to bottom, rgba(63, 224, 197, 0.5) 0%, transparent 100%);
+  animation: ray-flicker 6s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+.light-ray:nth-child(2) { animation-delay: -1.5s; }
+.light-ray:nth-child(3) { animation-delay: -3.1s; }
+.light-ray:nth-child(4) { animation-delay: -4.7s; }
+.light-ray:nth-child(5) { animation-delay: -2.2s; }
+
+/* ── Fireflies ── */
+@keyframes ff-float {
+  0%        { transform: translate(0, 0) scale(1); }
+  25%       { transform: translate(var(--ff-dx1), var(--ff-dy1)) scale(1.2); }
+  50%       { transform: translate(var(--ff-dx2), var(--ff-dy2)) scale(0.8); }
+  75%       { transform: translate(var(--ff-dx3), var(--ff-dy3)) scale(1.1); }
+  100%      { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes ff-blink {
+  0%, 100%  { opacity: 0; }
+  20%, 80%  { opacity: var(--ff-opacity); }
+  50%       { opacity: calc(var(--ff-opacity) * 0.4); }
+}
+
+.firefly {
+  position: absolute;
+  border-radius: 50%;
+  width: var(--ff-size);
+  height: var(--ff-size);
+  background: radial-gradient(circle, rgba(63, 224, 197, 0.9) 0%, rgba(63, 224, 197, 0.3) 50%, transparent 100%);
+  filter: blur(0.5px);
+  animation:
+    ff-float var(--ff-dur)  ease-in-out infinite var(--ff-delay),
+    ff-blink var(--ff-bdur) ease-in-out infinite var(--ff-bdelay);
+  will-change: transform, opacity;
+}
+
+/* ── Falling leaves ── */
+@keyframes leaf-fall {
+  0%   { transform: translateY(-20px) translateX(0)        rotate(var(--leaf-rot0)) scale(var(--leaf-scale)); opacity: 0; }
+  8%   { opacity: var(--leaf-opacity); }
+  90%  { opacity: var(--leaf-opacity); }
+  100% { transform: translateY(110vh)  translateX(var(--leaf-drift)) rotate(var(--leaf-rot1)) scale(var(--leaf-scale)); opacity: 0; }
+}
+
+.leaf {
+  position: absolute;
+  top: 0;
+  width: var(--leaf-w);
+  height: var(--leaf-h);
+  animation: leaf-fall var(--leaf-dur) linear infinite var(--leaf-delay);
+  will-change: transform, opacity;
+}
+
+/* ── Deer halo (right side) ── */
+@keyframes deer-halo-pulse {
+  0%, 100% { opacity: 0.2; transform: scale(1);    filter: blur(35px); }
+  50%       { opacity: 0.38; transform: scale(1.06); filter: blur(30px); }
+}
+
+.deer-halo {
+  background: radial-gradient(circle, rgba(63, 224, 197, 0.6) 0%, transparent 70%);
+  animation: deer-halo-pulse 5s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+/* ── Reduced motion overrides ── */
+@media (prefers-reduced-motion: reduce) {
+  .moss-orb,
+  .fog-layer-1,
+  .fog-layer-2,
+  .light-ray,
+  .firefly,
+  .leaf,
+  .deer-halo {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .fog-layer-1,
+  .fog-layer-2 { opacity: 0.15; }
+  .firefly      { opacity: 0.5; }
+  .leaf         { display: none; }
+}

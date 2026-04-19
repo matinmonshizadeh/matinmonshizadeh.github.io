@@ -1,0 +1,47 @@
+---
+// 18 fireflies with randomised positions, sizes, and timing
+const flies = [
+  { x:  8, y: 55, size: 3, opacity: 0.85, dur: 7.2, delay: 0,    bdur: 3.1, bdelay: 0,     dx1:  12, dy1: -8,  dx2: -6,  dy2:  14, dx3:  8,  dy3:  -4 },
+  { x: 14, y: 70, size: 2, opacity: 0.70, dur: 8.8, delay: -2.1, bdur: 2.8, bdelay: -1.2,  dx1:  -8, dy1: -12, dx2:  14, dy2:  6,  dx3: -10, dy3:   8 },
+  { x: 20, y: 42, size: 4, opacity: 0.90, dur: 6.5, delay: -4.3, bdur: 3.5, bdelay: -0.6,  dx1:   6, dy1:  10, dx2: -12, dy2: -8,  dx3:  10, dy3:  12 },
+  { x: 28, y: 78, size: 2, opacity: 0.65, dur: 9.1, delay: -1.5, bdur: 2.4, bdelay: -2.1,  dx1: -14, dy1:   4, dx2:   8, dy2: -16, dx3:  -6, dy3:   6 },
+  { x: 35, y: 60, size: 3, opacity: 0.80, dur: 7.8, delay: -5.7, bdur: 3.8, bdelay: -1.7,  dx1:  10, dy1:  -6, dx2: -16, dy2:  10, dx3:  12, dy3:  -8 },
+  { x: 42, y: 48, size: 5, opacity: 0.95, dur: 5.9, delay: -3.2, bdur: 4.2, bdelay: -0.3,  dx1:  -6, dy1:  14, dx2:  10, dy2: -10, dx3:  -8, dy3:  16 },
+  { x: 50, y: 72, size: 2, opacity: 0.60, dur: 10,  delay: -6.8, bdur: 2.6, bdelay: -3.1,  dx1:  12, dy1:   8, dx2:  -8, dy2:  -6, dx3:  14, dy3:   4 },
+  { x: 58, y: 38, size: 3, opacity: 0.85, dur: 8.2, delay: -0.9, bdur: 3.3, bdelay: -2.4,  dx1:  -10, dy1: -4, dx2:   6, dy2:  18, dx3: -12, dy3:  -6 },
+  { x: 65, y: 65, size: 4, opacity: 0.75, dur: 7.4, delay: -4.6, bdur: 4.0, bdelay: -1.0,  dx1:   8, dy1:  12, dx2: -14, dy2:  -8, dx3:  10, dy3:  14 },
+  { x: 72, y: 52, size: 2, opacity: 0.70, dur: 9.6, delay: -2.8, bdur: 2.9, bdelay: -0.8,  dx1: -12, dy1:   6, dx2:  10, dy2: -14, dx3:  -8, dy3:   8 },
+  { x: 78, y: 80, size: 3, opacity: 0.80, dur: 6.8, delay: -7.1, bdur: 3.6, bdelay: -2.7,  dx1:   6, dy1: -10, dx2: -10, dy2:  12, dx3:   8, dy3: -16 },
+  { x: 84, y: 44, size: 5, opacity: 0.90, dur: 5.5, delay: -1.4, bdur: 4.4, bdelay: -1.5,  dx1: -16, dy1:  -2, dx2:  12, dy2:   8, dx3: -10, dy3: -12 },
+  { x: 90, y: 68, size: 2, opacity: 0.65, dur: 8.4, delay: -5.2, bdur: 2.7, bdelay: -3.5,  dx1:   8, dy1:  14, dx2:  -6, dy2:  -8, dx3:  12, dy3:  10 },
+  { x: 18, y: 30, size: 3, opacity: 0.75, dur: 7.0, delay: -3.9, bdur: 3.2, bdelay: -0.4,  dx1: -8,  dy1:  -6, dx2:  14, dy2:  12, dx3:  -6, dy3: -10 },
+  { x: 45, y: 85, size: 4, opacity: 0.70, dur: 9.3, delay: -6.2, bdur: 3.9, bdelay: -2.0,  dx1:  10, dy1: -14, dx2:  -8, dy2:   6, dx3:  16, dy3: -12 },
+  { x: 62, y: 25, size: 2, opacity: 0.85, dur: 6.1, delay: -0.7, bdur: 2.5, bdelay: -1.8,  dx1: -12, dy1:  10, dx2:   6, dy2: -16, dx3: -14, dy3:   4 },
+  { x: 33, y: 88, size: 3, opacity: 0.60, dur: 11,  delay: -8.4, bdur: 4.1, bdelay: -3.9,  dx1:  14, dy1:   4, dx2: -10, dy2:  10, dx3:   8, dy3: -14 },
+  { x: 75, y: 35, size: 4, opacity: 0.80, dur: 8.0, delay: -4.0, bdur: 3.7, bdelay: -1.3,  dx1:  -6, dy1: -12, dx2:  12, dy2:   8, dx3: -16, dy3:  10 },
+];
+---
+
+<div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+  {flies.map(f => (
+    <div
+      class="firefly"
+      style={[
+        `left:${f.x}%`,
+        `top:${f.y}%`,
+        `--ff-size:${f.size}px`,
+        `--ff-opacity:${f.opacity}`,
+        `--ff-dur:${f.dur}s`,
+        `--ff-delay:${f.delay}s`,
+        `--ff-bdur:${f.bdur}s`,
+        `--ff-bdelay:${f.bdelay}s`,
+        `--ff-dx1:${f.dx1}px`,
+        `--ff-dy1:${f.dy1}px`,
+        `--ff-dx2:${f.dx2}px`,
+        `--ff-dy2:${f.dy2}px`,
+        `--ff-dx3:${f.dx3}px`,
+        `--ff-dy3:${f.dy3}px`,
+      ].join(';')}
+    />
+  ))}
+</div>

@@ -1,0 +1,24 @@
+---
+// Bioluminescent moss orbs — lower half of hero, right-biased (where forest floor is)
+const orbs = [
+  { x: 15, y: 75, w: 180, h: 120, color: 'rgba(63,224,197,0.30)' },
+  { x: 55, y: 82, w: 240, h: 140, color: 'rgba(74,122,133,0.35)' },
+  { x: 80, y: 70, w: 200, h: 130, color: 'rgba(63,224,197,0.25)' },
+];
+---
+
+<div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+  {orbs.map(o => (
+    <div
+      class="moss-orb absolute"
+      style={[
+        `left:${o.x}%`,
+        `top:${o.y}%`,
+        `width:${o.w}px`,
+        `height:${o.h}px`,
+        `background:radial-gradient(ellipse, ${o.color} 0%, transparent 70%)`,
+        `transform:translate(-50%,-50%)`,
+      ].join(';')}
+    />
+  ))}
+</div>

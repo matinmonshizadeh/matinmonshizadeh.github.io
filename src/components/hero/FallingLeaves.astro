@@ -1,0 +1,53 @@
+---
+// 12 leaves falling at different rates and horizontal paths
+const leaves = [
+  { x:  5, dur: 14, delay:  0,    drift:  30, rot0:   0, rot1:  320, scale: 0.8, opacity: 0.55, w: 10, h:  8 },
+  { x: 12, dur: 18, delay: -4.2,  drift: -20, rot0:  45, rot1: -180, scale: 1.0, opacity: 0.45, w: 14, h: 10 },
+  { x: 22, dur: 12, delay: -8.7,  drift:  45, rot0: 120, rot1:  420, scale: 0.7, opacity: 0.60, w:  8, h:  7 },
+  { x: 38, dur: 16, delay: -2.1,  drift: -35, rot0:  60, rot1: -240, scale: 1.1, opacity: 0.40, w: 16, h: 12 },
+  { x: 48, dur: 20, delay: -11.3, drift:  25, rot0:  30, rot1:  360, scale: 0.9, opacity: 0.50, w: 12, h:  9 },
+  { x: 55, dur: 13, delay: -6.5,  drift: -40, rot0:  90, rot1: -300, scale: 0.75,opacity: 0.65, w:  9, h:  8 },
+  { x: 63, dur: 17, delay: -3.8,  drift:  50, rot0: 150, rot1:  480, scale: 1.0, opacity: 0.45, w: 13, h: 11 },
+  { x: 72, dur: 11, delay: -9.1,  drift: -28, rot0:   0, rot1: -200, scale: 0.85,opacity: 0.55, w: 11, h:  8 },
+  { x: 80, dur: 15, delay: -1.4,  drift:  35, rot0:  75, rot1:  350, scale: 0.7, opacity: 0.60, w:  8, h:  7 },
+  { x: 88, dur: 19, delay: -7.6,  drift: -45, rot0:  30, rot1: -270, scale: 1.05,opacity: 0.42, w: 15, h: 11 },
+  { x: 30, dur: 22, delay: -13.2, drift:  20, rot0: 180, rot1:  520, scale: 0.65,opacity: 0.50, w:  7, h:  6 },
+  { x: 92, dur: 10, delay: -5.0,  drift: -22, rot0:  45, rot1: -160, scale: 0.9, opacity: 0.58, w: 10, h:  9 },
+];
+
+// Simple SVG leaf shape
+const leafPath = "M10 1 C6 1 1 4 1 9 C1 14 6 17 10 17 C14 17 19 14 19 9 C15 4 14 1 10 1 Z M10 1 C10 6 5 9 1 9";
+---
+
+<div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+  {leaves.map(l => (
+    <div
+      class="leaf"
+      style={[
+        `left:${l.x}%`,
+        `--leaf-w:${l.w}px`,
+        `--leaf-h:${l.h}px`,
+        `--leaf-dur:${l.dur}s`,
+        `--leaf-delay:${l.delay}s`,
+        `--leaf-drift:${l.drift}px`,
+        `--leaf-rot0:${l.rot0}deg`,
+        `--leaf-rot1:${l.rot1}deg`,
+        `--leaf-scale:${l.scale}`,
+        `--leaf-opacity:${l.opacity}`,
+      ].join(';')}
+    >
+      <svg
+        width={l.w}
+        height={l.h}
+        viewBox="0 0 20 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={`opacity:${l.opacity}`}
+      >
+        <ellipse cx="10" cy="9" rx="9" ry="7" fill="rgba(63,224,197,0.55)" />
+        <path d={leafPath} stroke="rgba(63,224,197,0.4)" stroke-width="0.5" fill="none" />
+        <line x1="10" y1="2" x2="10" y2="16" stroke="rgba(63,224,197,0.3)" stroke-width="0.5" />
+      </svg>
+    </div>
+  ))}
+</div>
