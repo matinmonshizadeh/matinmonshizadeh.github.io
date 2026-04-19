@@ -95,8 +95,8 @@ collections:
           - { name: intro,    widget: text,   label: "Intro strip paragraph" }
           - { name: email,    widget: string, label: "Email address" }
           - { name: github,   widget: string, label: "GitHub profile URL" }
-          - { name: linkedin, widget: string, label: "LinkedIn profile URL" }
-          - { name: scholar,  widget: string, label: "Google Scholar URL" }
+          - { name: linkedin,   widget: string, label: "LinkedIn profile URL" }
+          - { name: artstation, widget: string, label: "ArtStation profile URL" }
           - { name: cv,       widget: string, label: "CV path (e.g. /cv.pdf)" }
           - name: projects_page_desc
             widget: text
@@ -111,10 +111,6 @@ collections:
           - name: games_section_desc
             widget: string
             label: "Games section — description"
-          - name: footer_text
-            widget: string
-            label: "Footer credit text"
-            hint: "e.g. Built with Astro, hosted on GitHub Pages"
 
   # ── About ──────────────────────────────────────────────────────────────────
   - name: about
