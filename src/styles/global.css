@@ -130,19 +130,18 @@
   transition: filter 200ms ease-out;
 }
 
-/* Deer center ≈ 51% across, 55% down the 666×375 canvas.
-   background-size renders the image at 200px wide (→ 113px tall).
-   Displayed deer-center ≈ (102px, 62px).
-   background-position shifts that point to clip center (22px, 22px):
-   x = 22 - 102 = -80px, y = 22 - 62 = -40px */
+/* background-size: 400% zooms the 666×375 image to 4× the element
+   width (176px), so the deer fills the 44×44 clip.
+   background-position uses percentages so the crop tracks the deer's
+   location in the image (≈51% across, ≈55% down) rather than
+   fragile pixel offsets. */
 .nav-deer-clip {
   width: 44px;
   height: 44px;
-  background-size: 200px auto;
-  background-position: -80px -40px;
+  background-size: 400%;
+  background-position: 51% 55%;
   background-repeat: no-repeat;
   animation: deer-breathe 3.5s ease-in-out infinite;
-  will-change: transform;
   transition: transform 200ms ease-out;
 }
 
@@ -162,7 +161,5 @@
   .nav-deer-clip {
     width: 38px;
     height: 38px;
-    background-size: 175px auto;
-    background-position: -70px -35px;
   }
 }
