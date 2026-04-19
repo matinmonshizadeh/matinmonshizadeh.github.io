@@ -167,3 +167,76 @@
     background-position: -41px -53px;
   }
 }
+
+/* ── Mobile glass menu ── */
+@keyframes menu-link-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ambient-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1.0; }
+}
+
+/* Menu container — closed state */
+#mobile-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.97);
+  transition: opacity 200ms ease-out, transform 200ms ease-out, visibility 0ms linear 200ms;
+}
+
+/* Menu container — open state */
+#mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: opacity 200ms ease-out, transform 200ms ease-out, visibility 0ms linear 0ms;
+}
+
+/* Staggered link entrance — only plays when menu is open */
+#mobile-menu.is-open .menu-link-item {
+  animation: menu-link-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+#mobile-menu.is-open .menu-link-item:nth-child(1) { animation-delay:  60ms; }
+#mobile-menu.is-open .menu-link-item:nth-child(2) { animation-delay: 120ms; }
+#mobile-menu.is-open .menu-link-item:nth-child(3) { animation-delay: 180ms; }
+#mobile-menu.is-open .menu-link-item:nth-child(4) { animation-delay: 240ms; }
+#mobile-menu.is-open .menu-link-item:nth-child(5) { animation-delay: 300ms; }
+
+/* Ambient glow orbs */
+.menu-glow-orb {
+  animation: ambient-pulse 6s ease-in-out infinite;
+}
+
+/* Teal active dot for current page */
+.menu-link-active::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3FE0C5;
+  margin-right: 12px;
+  vertical-align: middle;
+  box-shadow: 0 0 8px rgba(63, 224, 197, 0.8);
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mobile-menu,
+  #mobile-menu.is-open {
+    transition: none;
+  }
+  #mobile-menu.is-open .menu-link-item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .menu-glow-orb {
+    animation: none;
+    opacity: 0.7;
+  }
+}

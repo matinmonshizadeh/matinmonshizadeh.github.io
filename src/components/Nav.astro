@@ -3,14 +3,22 @@ import { getEntry } from 'astro:content';
 import deerImg from '../assets/hero/deer.png';
 
 const site = await getEntry('site', 'config');
-const { name, cv } = site!.data;
+const { name } = site!.data;
 
 const navLinks = [
-  { href: '/projects', label: 'Projects' },
-  { href: '/about',    label: 'About' },
+  { href: '/',           label: 'Home'       },
+  { href: '/about',      label: 'About'      },
+  { href: '/experience', label: 'Experience' },
+  { href: '/projects',   label: 'Projects'   },
+  { href: '/contact',    label: 'Contact'    },
 ];
 
 const currentPath = Astro.url.pathname;
+
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
 ---
 
 <header
@@ -21,6 +29,7 @@ const currentPath = Astro.url.pathname;
     class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 h-full flex items-center justify-between"
     aria-label="Main navigation"
   >
+    <!-- Logo / home link -->
     <a
       href="/"
       class="nav-home-link group flex items-center gap-2.5 rounded-sm"
@@ -33,32 +42,23 @@ const currentPath = Astro.url.pathname;
       </span>
     </a>
 
+    <!-- Desktop links (≥768px) — skip Home since logo covers it -->
     <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0" role="list">
-      {navLinks.map(link => (
+      {navLinks.filter(l => l.href !== '/').map(link => (
         <li>
           <a
             href={link.href}
             class={`font-sans text-sm transition-colors duration-150 rounded-sm ${
-              currentPath.startsWith(link.href)
-                ? 'text-accent'
-                : 'text-fg-secondary hover:text-fg-primary'
+              isActive(link.href) ? 'text-accent' : 'text-fg-secondary hover:text-fg-primary'
             }`}
           >
             {link.label}
           </a>
         </li>
       ))}
-      <li>
-        <a
-          href={cv}
-          download
-          class="font-sans text-sm text-fg-secondary hover:text-fg-primary transition-colors duration-150 rounded-sm"
-        >
-          CV
-        </a>
-      </li>
     </ul>
 
+    <!-- Hamburger toggle (<768px) -->
     <button
       id="nav-toggle"
       type="button"
@@ -80,44 +80,72 @@ const currentPath = Astro.url.pathname;
   </nav>
 </header>
 
+<!-- ── Glass mobile menu ── -->
 <div
   id="mobile-menu"
   role="dialog"
   aria-modal="true"
   aria-label="Navigation menu"
-  class="hidden fixed inset-0 top-16 bg-bg-base z-40 flex-col items-center justify-center gap-10"
+  class="fixed inset-0 top-16 z-40 flex flex-col items-center justify-center"
+  style="
+    background: linear-gradient(135deg, rgba(10,17,24,0.65) 0%, rgba(15,26,34,0.75) 100%);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-top: 1px solid rgba(63,224,197,0.12);
+  "
 >
-  <ul class="flex flex-col items-center gap-8 list-none m-0 p-0" role="list">
+  <!-- Ambient glow: top-right -->
+  <div
+    class="menu-glow-orb absolute pointer-events-none"
+    style="
+      top: -60px; right: -60px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(63,224,197,0.08) 0%, transparent 70%);
+    "
+    aria-hidden="true"
+  ></div>
+
+  <!-- Ambient glow: bottom-left -->
+  <div
+    class="menu-glow-orb absolute pointer-events-none"
+    style="
+      bottom: -40px; left: -40px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(63,224,197,0.07) 0%, transparent 70%);
+      animation-delay: -3s;
+    "
+    aria-hidden="true"
+  ></div>
+
+  <!-- Links -->
+  <ul class="relative flex flex-col items-center gap-8 list-none m-0 p-0" role="list">
     {navLinks.map(link => (
-      <li>
+      <li class="menu-link-item">
         <a
           href={link.href}
-          class="font-heading text-2xl font-semibold text-fg-primary hover:text-accent transition-colors duration-150"
+          class={`flex items-center font-heading text-3xl font-medium transition-all duration-200 rounded-sm
+            ${isActive(link.href)
+              ? 'text-accent menu-link-active'
+              : 'text-fg-primary hover:text-accent hover:[text-shadow:0_0_20px_rgba(63,224,197,0.4)]'
+            }`}
         >
           {link.label}
         </a>
       </li>
     ))}
-    <li>
-      <a
-        href={cv}
-        download
-        class="font-heading text-2xl font-semibold text-fg-primary hover:text-accent transition-colors duration-150"
-      >
-        CV
-      </a>
-    </li>
   </ul>
 </div>
 
 <div class="h-16" aria-hidden="true"></div>
 
 <script>
-  const toggle    = document.getElementById('nav-toggle');
-  const menu      = document.getElementById('mobile-menu');
-  const iconOpen  = document.getElementById('icon-open');
-  const iconClose = document.getElementById('icon-close');
-  const nav       = document.getElementById('site-nav');
+  const toggle    = document.getElementById('nav-toggle')!;
+  const menu      = document.getElementById('mobile-menu')!;
+  const iconOpen  = document.getElementById('icon-open')!;
+  const iconClose = document.getElementById('icon-close')!;
+  const nav       = document.getElementById('site-nav')!;
 
   if (!toggle || !menu || !iconOpen || !iconClose || !nav) {
     console.error('Nav: required elements not found');
@@ -127,8 +155,7 @@ const currentPath = Astro.url.pathname;
 
     function openMenu() {
       isOpen = true;
-      menu.classList.remove('hidden');
-      menu.classList.add('flex');
+      menu.classList.add('is-open');
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close navigation menu');
       iconOpen.classList.add('hidden');
@@ -139,8 +166,7 @@ const currentPath = Astro.url.pathname;
 
     function closeMenu() {
       isOpen = false;
-      menu.classList.add('hidden');
-      menu.classList.remove('flex');
+      menu.classList.remove('is-open');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open navigation menu');
       iconOpen.classList.remove('hidden');
