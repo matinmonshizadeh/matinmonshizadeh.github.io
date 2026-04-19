@@ -116,40 +116,52 @@
 }
 
 /*
-  Clip container: fixed 44×44 viewport cropped to the deer region.
-  All animation + glow lives here so transform-origin is the visible
-  deer center, not the oversized underlying image.
+  Two-layer approach: filter must NOT be on the same element as
+  overflow:hidden — that's a browser bug that causes the child to
+  disappear. Outer layer owns filter + glow animation; inner layer
+  owns the overflow crop.
 */
+.nav-deer-anim {
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(63, 224, 197, 0.6));
+  animation: deer-glow 3.5s ease-in-out infinite;
+  will-change: filter;
+  transition: filter 200ms ease-out;
+}
+
+/* Inner: clips a 44×44 viewport into the scaled-up image */
 .nav-deer-clip {
   width: 44px;
   height: 44px;
   overflow: hidden;
   position: relative;
-  flex-shrink: 0;
-  filter: drop-shadow(0 0 6px rgba(63, 224, 197, 0.6));
-  animation: deer-breathe 3.5s ease-in-out infinite,
-             deer-glow    3.5s ease-in-out infinite;
-  will-change: transform, filter;
-  transition: transform 200ms ease-out, filter 200ms ease-out;
+  animation: deer-breathe 3.5s ease-in-out infinite;
+  will-change: transform;
+  transition: transform 200ms ease-out;
 }
 
-/* Img is scaled up and panned to show just the deer */
+/* Img is rendered at 200px wide and panned so the deer fills the clip.
+   Deer center ≈ 52% across, 61% down the 666×375 canvas.
+   At 200×113px rendered: deer-center ≈ (104px, 69px).
+   Offset so that point lands at the clip center (22px, 22px). */
 .nav-deer {
   position: absolute;
-  width: 160px;
+  width: 200px;
   height: auto;
-  /* Deer is ~42% across, ~57% down the 666×375 canvas.
-     At 160×90px rendered: deer-center ≈ (67px, 51px).
-     Offset so that point lands at the clip center (22px, 22px). */
-  left: -45px;
-  top: -29px;
+  left: -82px;
+  top: -47px;
+}
+
+.nav-home-link:hover .nav-deer-anim,
+.nav-home-link:focus-visible .nav-deer-anim {
+  animation: none;
+  filter: drop-shadow(0 0 12px rgba(63, 224, 197, 0.95));
 }
 
 .nav-home-link:hover .nav-deer-clip,
 .nav-home-link:focus-visible .nav-deer-clip {
   animation: none;
   transform: scale(1.15);
-  filter: drop-shadow(0 0 12px rgba(63, 224, 197, 0.95));
 }
 
 @media (max-width: 767px) {
@@ -158,8 +170,8 @@
     height: 38px;
   }
   .nav-deer {
-    width: 138px;
-    left: -39px;
-    top: -25px;
+    width: 175px;
+    left: -72px;
+    top: -41px;
   }
 }
