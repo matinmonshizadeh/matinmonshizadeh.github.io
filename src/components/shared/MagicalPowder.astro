@@ -1,0 +1,75 @@
+---
+interface Props {
+  count?: number;
+}
+const { count = 55 } = Astro.props;
+
+const particles = Array.from({ length: count }, (_, i) => ({
+  left:     (i * 37 + 11) % 100,
+  duration: 8 + (i * 13 % 9),
+  delay:    -((i * 7 + 3) % 13),
+  size:     (i % 3) + 1,
+  color:    i % 4 === 0 ? '#6FE8D4' : '#3FE0C5',
+  drift:    ((i * 17 + 5) % 30) - 15,
+}));
+---
+
+<div class="powder" aria-hidden="true">
+  {particles.map(p => (
+    <span
+      class="particle"
+      style={[
+        `left:${p.left}%`,
+        `--fall-dur:${p.duration}s`,
+        `--fall-delay:${p.delay}s`,
+        `--size:${p.size}px`,
+        `--color:${p.color}`,
+        `--drift:${p.drift}px`,
+      ].join(';')}
+    />
+  ))}
+</div>
+
+<style>
+  .powder {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    top: -5%;
+    left: 50%;
+    width: var(--size, 2px);
+    height: var(--size, 2px);
+    border-radius: 50%;
+    background: var(--color, #3FE0C5);
+    box-shadow: 0 0 6px var(--color, #3FE0C5);
+    will-change: transform, opacity;
+    animation: powderFall var(--fall-dur, 12s) linear infinite var(--fall-delay, 0s);
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .particle:nth-child(n+31) { display: none; }
+  }
+
+  @media (max-width: 767px) {
+    .particle:nth-child(n+16) { display: none; }
+  }
+
+  @keyframes powderFall {
+    0%   { transform: translateY(-5vh)   translateX(0);                              opacity: 0;   }
+    8%   { opacity: 1; }
+    30%  { transform: translateY(30vh)   translateX(var(--drift, 0px)); }
+    70%  { transform: translateY(70vh)   translateX(calc(var(--drift, 0px) * -0.5)); }
+    85%  { opacity: 0.8; }
+    100% { transform: translateY(105vh)  translateX(0);                              opacity: 0;   }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .powder { display: none; }
+  }
+</style>

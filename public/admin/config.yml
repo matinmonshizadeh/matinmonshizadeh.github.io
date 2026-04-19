@@ -98,6 +98,7 @@ collections:
           - { name: linkedin,   widget: string, label: "LinkedIn profile URL" }
           - { name: artstation, widget: string, label: "ArtStation profile URL" }
           - { name: cv,       widget: string, label: "CV path (e.g. /cv.pdf)" }
+          - { name: location, widget: string, label: "Location", required: false }
           - name: projects_page_desc
             widget: text
             label: "Projects page — subtitle"
