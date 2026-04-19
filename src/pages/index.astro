@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectGrid from '../components/ProjectGrid.astro';
 import LivingForestHero from '../components/hero/LivingForestHero.astro';
+import GetInTouchSection from '../components/home/GetInTouchSection.astro';
 import { getEntry, getCollection } from 'astro:content';
 
 const site     = await getEntry('site', 'config');
@@ -53,5 +54,8 @@ const featured    = allProjects.filter(p => p.data.featured);
       </div>
     </section>
   )}
+
+  <!-- ── Get in Touch ── -->
+  <GetInTouchSection />
 
 </BaseLayout>

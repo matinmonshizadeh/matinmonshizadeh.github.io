@@ -1,0 +1,241 @@
+---
+import keyImg from '../../assets/hero/key.png';
+
+// Deterministic particles — seeded by index, no hydration mismatch
+const particles = Array.from({ length: 55 }, (_, i) => ({
+  left:     (i * 37 + 11) % 100,
+  duration: 8 + (i * 13 % 9),
+  delay:    -((i * 7 + 3) % 13),
+  size:     (i % 3) + 1,
+  color:    i % 4 === 0 ? '#6FE8D4' : '#3FE0C5',
+  drift:    ((i * 17 + 5) % 30) - 15,
+}));
+
+// Key definitions — position, size, rotation, animation timing, opacity
+const keys = [
+  { top: '15%', left:  '8%', right: 'auto', size: 70,  rot: '-15deg', floatDur: '5.2s', floatDelay:    '0s', glowDur: '3.8s', glowDelay: '-1.2s', opacity: 0.85, cls: '' },
+  { top: '25%', left: 'auto', right: '10%', size: 90,  rot:  '22deg', floatDur: '6.1s', floatDelay: '-2.3s', glowDur: '4.5s', glowDelay: '-0.7s', opacity: 0.85, cls: '' },
+  { top: 'auto', left: '12%', right: 'auto', size: 80, rot:  '-8deg', floatDur: '4.8s', floatDelay: '-1.1s', glowDur: '3.2s', glowDelay: '-2.5s', opacity: 0.85, cls: 'key--mid', bottom: '20%' },
+  { top: 'auto', left: 'auto', right: '8%', size: 65,  rot:  '30deg', floatDur: '5.7s', floatDelay: '-3.8s', glowDur: '4.1s', glowDelay: '-1.8s', opacity: 0.85, cls: 'key--mid', bottom: '15%' },
+  { top: '45%', left:  '3%', right: 'auto', size: 55,  rot: '-25deg', floatDur: '7.3s', floatDelay: '-0.5s', glowDur: '5.0s', glowDelay: '-3.1s', opacity: 0.60, cls: 'key--extra' },
+  { top: 'auto', left: 'auto', right: '4%', size: 50,  rot:  '12deg', floatDur: '6.8s', floatDelay: '-4.2s', glowDur: '4.7s', glowDelay: '-0.9s', opacity: 0.55, cls: 'key--extra', bottom: '45%' },
+];
+---
+
+<section class="get-in-touch" aria-labelledby="contact-cta-heading">
+
+  <!-- Powder particles (decorative) -->
+  <div class="powder" aria-hidden="true">
+    {particles.map(p => (
+      <span
+        class="particle"
+        style={[
+          `left:${p.left}%`,
+          `--fall-dur:${p.duration}s`,
+          `--fall-delay:${p.delay}s`,
+          `--size:${p.size}px`,
+          `--color:${p.color}`,
+          `--drift:${p.drift}px`,
+        ].join(';')}
+      />
+    ))}
+  </div>
+
+  <!-- Floating keys (decorative) -->
+  {keys.map(k => (
+    <img
+      src={keyImg.src}
+      width={keyImg.width}
+      height={keyImg.height}
+      alt=""
+      aria-hidden="true"
+      class={`key ${k.cls}`}
+      style={[
+        `top:${k.top}`,
+        `left:${k.left}`,
+        k.right  !== 'auto' ? `right:${k.right}`   : '',
+        k.bottom !== undefined ? `bottom:${k.bottom}` : '',
+        `width:${k.size}px`,
+        `height:${k.size}px`,
+        `--rot:${k.rot}`,
+        `--float-dur:${k.floatDur}`,
+        `--float-delay:${k.floatDelay}`,
+        `--glow-dur:${k.glowDur}`,
+        `--glow-delay:${k.glowDelay}`,
+        `--opacity:${k.opacity}`,
+      ].filter(Boolean).join(';')}
+    />
+  ))}
+
+  <!-- CTA content -->
+  <div class="cta-content" data-animate>
+    <h2 id="contact-cta-heading" class="cta-heading">Get in Touch</h2>
+    <p class="cta-sub">
+      Always open to collaborations, research opportunities, and a good conversation.
+    </p>
+    <a href="/contact" class="cta-btn">Let's Talk →</a>
+  </div>
+
+</section>
+
+<style>
+  /* ── Section ── */
+  .get-in-touch {
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 1rem;
+    border-top: 1px solid #16222C;
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 50%, rgba(63, 224, 197, 0.05) 0%, transparent 70%),
+      #0A1118;
+  }
+  @media (min-width: 768px)  { .get-in-touch { padding: 7rem 1.5rem; } }
+  @media (min-width: 1024px) { .get-in-touch { padding: 9rem 6rem; } }
+
+  /* ── CTA content ── */
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 48rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .cta-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    color: #E8F4F4;
+    text-shadow: 0 0 24px rgba(63, 224, 197, 0.3);
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .cta-sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #9BB3B8;
+    font-size: 1.125rem;
+    margin-top: 1rem;
+  }
+  @media (min-width: 768px) { .cta-sub { font-size: 1.25rem; } }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    margin-top: 2.5rem;
+    padding: 1rem 2rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #3FE0C5;
+    border: 2px solid #3FE0C5;
+    border-radius: 0.25rem;
+    background: transparent;
+    text-decoration: none;
+    transition: background 200ms ease, color 200ms ease, box-shadow 200ms ease;
+  }
+  .cta-btn:hover {
+    background: #3FE0C5;
+    color: #0A1118;
+    box-shadow: 0 0 32px rgba(63, 224, 197, 0.5);
+  }
+  .cta-btn:focus-visible {
+    outline: 2px solid #3FE0C5;
+    outline-offset: 2px;
+  }
+
+  /* ── Keys ── */
+  .key {
+    position: absolute;
+    object-fit: contain;
+    opacity: var(--opacity, 0.85);
+    mix-blend-mode: screen;
+    z-index: 1;
+    rotate: var(--rot, 0deg);
+    will-change: transform, filter;
+    animation:
+      keyFloat var(--float-dur, 5s) ease-in-out infinite var(--float-delay, 0s),
+      keyGlow  var(--glow-dur,  4s) ease-in-out infinite var(--glow-delay,  0s);
+  }
+
+  /* Tablet: hide the two small "distant" keys */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .key--extra { display: none; }
+  }
+
+  /* Mobile: show only first two keys (no mid, no extra) */
+  @media (max-width: 767px) {
+    .key--mid,
+    .key--extra { display: none; }
+    /* Resize the two visible keys */
+    .key { width: 60px !important; height: 60px !important; }
+  }
+
+  /* ── Key keyframes ── */
+  @keyframes keyFloat {
+    0%   { transform: translateY(-8px) translateX(-4px) rotate(-3deg); }
+    25%  { transform: translateY( 0px) translateX( 4px) rotate( 0deg); }
+    50%  { transform: translateY( 8px) translateX(-2px) rotate( 3deg); }
+    75%  { transform: translateY( 2px) translateX( 3px) rotate( 1deg); }
+    100% { transform: translateY(-8px) translateX(-4px) rotate(-3deg); }
+  }
+
+  @keyframes keyGlow {
+    0%, 100% { filter: drop-shadow(0 0 10px rgba(63, 224, 197, 0.3)); }
+    50%       { filter: drop-shadow(0 0 20px rgba(63, 224, 197, 0.65)); }
+  }
+
+  /* ── Powder particles ── */
+  .powder {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    top: -5%;
+    left: var(--left, 50%);
+    width: var(--size, 2px);
+    height: var(--size, 2px);
+    border-radius: 50%;
+    background: var(--color, #3FE0C5);
+    box-shadow: 0 0 6px var(--color, #3FE0C5);
+    will-change: transform, opacity;
+    animation: powderFall var(--fall-dur, 12s) linear infinite var(--fall-delay, 0s);
+  }
+
+  /* Tablet: hide particles beyond index 30 */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .particle:nth-child(n+31) { display: none; }
+  }
+
+  /* Mobile: show only first 15 */
+  @media (max-width: 767px) {
+    .particle:nth-child(n+16) { display: none; }
+  }
+
+  @keyframes powderFall {
+    0%   { transform: translateY(-5vh)  translateX(0);               opacity: 0;   }
+    8%   { opacity: 1; }
+    30%  { transform: translateY(30vh)  translateX(var(--drift, 0px)); }
+    70%  { transform: translateY(70vh)  translateX(calc(var(--drift, 0px) * -0.5)); }
+    85%  { opacity: 0.8; }
+    100% { transform: translateY(105vh) translateX(0);               opacity: 0;   }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .key {
+      animation: none;
+    }
+    .powder {
+      display: none;
+    }
+  }
+</style>
