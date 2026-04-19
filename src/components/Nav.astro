@@ -25,17 +25,8 @@ const currentPath = Astro.url.pathname;
       href="/"
       class="nav-home-link group flex items-center gap-2.5 rounded-sm"
     >
-      <div class="nav-deer-anim">
-        <div class="nav-deer-clip">
-          <img
-            src={deerImg.src}
-            width="200"
-            height="113"
-            alt=""
-            aria-hidden="true"
-            class="nav-deer"
-          />
-        </div>
+      <div class="nav-deer-anim" aria-hidden="true">
+        <div class="nav-deer-clip" style={`background-image: url('${deerImg.src}')`}></div>
       </div>
       <span class="font-heading font-semibold text-fg-primary group-hover:text-accent transition-colors duration-150">
         {name}

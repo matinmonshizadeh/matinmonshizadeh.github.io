@@ -116,10 +116,11 @@
 }
 
 /*
-  Two-layer approach: filter must NOT be on the same element as
-  overflow:hidden — that's a browser bug that causes the child to
-  disappear. Outer layer owns filter + glow animation; inner layer
-  owns the overflow crop.
+  background-image approach: avoids every browser bug with
+  filter + overflow:hidden + position:absolute + animation combos.
+  The image is painted as part of the element itself.
+  Outer (.nav-deer-anim) owns the glow filter.
+  Inner (.nav-deer-clip) owns breathing scale + the background crop.
 */
 .nav-deer-anim {
   flex-shrink: 0;
@@ -129,27 +130,20 @@
   transition: filter 200ms ease-out;
 }
 
-/* Inner: clips a 44×44 viewport into the scaled-up image */
+/* Deer center ≈ 51% across, 55% down the 666×375 canvas.
+   background-size renders the image at 200px wide (→ 113px tall).
+   Displayed deer-center ≈ (102px, 62px).
+   background-position shifts that point to clip center (22px, 22px):
+   x = 22 - 102 = -80px, y = 22 - 62 = -40px */
 .nav-deer-clip {
   width: 44px;
   height: 44px;
-  overflow: hidden;
-  position: relative;
+  background-size: 200px auto;
+  background-position: -80px -40px;
+  background-repeat: no-repeat;
   animation: deer-breathe 3.5s ease-in-out infinite;
   will-change: transform;
   transition: transform 200ms ease-out;
-}
-
-/* Img is rendered at 200px wide and panned so the deer fills the clip.
-   Deer center ≈ 52% across, 61% down the 666×375 canvas.
-   At 200×113px rendered: deer-center ≈ (104px, 69px).
-   Offset so that point lands at the clip center (22px, 22px). */
-.nav-deer {
-  position: absolute;
-  width: 200px;
-  height: auto;
-  left: -82px;
-  top: -47px;
 }
 
 .nav-home-link:hover .nav-deer-anim,
@@ -168,10 +162,7 @@
   .nav-deer-clip {
     width: 38px;
     height: 38px;
-  }
-  .nav-deer {
-    width: 175px;
-    left: -72px;
-    top: -41px;
+    background-size: 175px auto;
+    background-position: -70px -35px;
   }
 }
