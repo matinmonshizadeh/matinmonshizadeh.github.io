@@ -115,53 +115,138 @@ collections:
 
   # ── About ──────────────────────────────────────────────────────────────────
   - name: about
-    label: About
+    label: About Page
     files:
       - name: about
         label: About Page
         file: src/content/about/about.md
         fields:
-          - name: photo
-            widget: image
-            label: Profile Photo
-            required: false
-            hint: "Upload your photo. Stored in public/images/."
-            media_folder: /public/images
-            public_folder: /images
+          - name: professional_summary
+            widget: object
+            label: Professional Summary
+            fields:
+              - { name: heading,   widget: string, label: "Section heading" }
+              - name: photo
+                widget: image
+                label: Profile Photo
+                required: false
+                hint: "Upload your photo."
+                media_folder: /public/images/about
+                public_folder: /images/about
+              - { name: photo_alt, widget: string, label: "Photo alt text", required: false }
+
+          - name: technical_skills
+            widget: object
+            label: Technical Skills
+            fields:
+              - { name: heading, widget: string, label: "Section heading" }
+              - name: groups
+                widget: list
+                label: Skill Groups
+                fields:
+                  - { name: name, widget: string, label: "Group name (e.g. Languages)" }
+                  - name: skills
+                    widget: list
+                    label: Skills
+                    hint: "One skill per item (e.g. Python)"
 
           - name: education
-            widget: list
+            widget: object
             label: Education
             fields:
-              - { name: degree,      widget: string, label: Degree }
-              - { name: institution, widget: string, label: Institution }
-              - { name: year,        widget: string, label: Year / Period }
-
-          - name: experience
-            widget: list
-            label: Experience
-            fields:
-              - { name: role,    widget: string, label: Role }
-              - { name: company, widget: string, label: Organisation }
-              - { name: period,  widget: string, label: Period }
-              - name: bullets
+              - { name: heading, widget: string, label: "Section heading" }
+              - name: entries
                 widget: list
-                label: Bullet points
-
-          - name: skills
-            widget: object
-            label: Skills
-            fields:
-              - { name: Languages, widget: list, label: Languages }
-              - { name: "CV / ML", widget: list, label: "CV / ML" }
-              - { name: Graphics,  widget: list, label: Graphics }
-              - { name: Tools,     widget: list, label: Tools }
-
-          - name: awards
-            widget: list
-            label: Awards & Certifications
-            required: false
+                label: Education Entries
+                fields:
+                  - { name: degree,      widget: string, label: Degree }
+                  - { name: institution, widget: string, label: Institution }
+                  - { name: location,    widget: string, label: Location, required: false }
+                  - { name: start_date,  widget: string, label: Start Date (e.g. Sep 2024) }
+                  - { name: end_date,    widget: string, label: End Date (e.g. Present) }
+                  - { name: description, widget: text,   label: Description, required: false }
+                  - name: logo
+                    widget: image
+                    label: Institution Logo
+                    required: false
+                    media_folder: /public/images/about
+                    public_folder: /images/about
 
           - name: body
             widget: markdown
-            label: Bio (paragraphs)
+            label: Professional Summary (prose)
+
+  # ── Experience ─────────────────────────────────────────────────────────────
+  - name: experience
+    label: Experience Page
+    files:
+      - name: experience
+        label: Experience Page
+        file: src/content/experience/experience.md
+        fields:
+          - name: work_history
+            widget: object
+            label: Internships & Work History
+            fields:
+              - { name: heading, widget: string, label: "Section heading" }
+              - name: entries
+                widget: list
+                label: Work Entries
+                fields:
+                  - { name: role,        widget: string, label: Role / Title }
+                  - { name: company,     widget: string, label: Company / Organisation }
+                  - { name: location,    widget: string, label: Location, required: false }
+                  - { name: start_date,  widget: string, label: Start Date }
+                  - { name: end_date,    widget: string, label: End Date }
+                  - { name: description, widget: text,   label: Short Description }
+                  - name: bullets
+                    widget: list
+                    label: Bullet Points
+                    hint: "2–4 achievement or responsibility bullets"
+                  - name: logo
+                    widget: image
+                    label: Company Logo
+                    required: false
+                    media_folder: /public/images/experience
+                    public_folder: /images/experience
+
+          - name: volunteering
+            widget: object
+            label: Volunteering
+            fields:
+              - { name: heading, widget: string, label: "Section heading" }
+              - name: entries
+                widget: list
+                label: Volunteering Entries
+                fields:
+                  - { name: role,         widget: string, label: Role }
+                  - { name: organization, widget: string, label: Organisation }
+                  - { name: location,     widget: string, label: Location, required: false }
+                  - { name: start_date,   widget: string, label: Start Date }
+                  - { name: end_date,     widget: string, label: End Date }
+                  - { name: description,  widget: text,   label: Short Description }
+                  - name: bullets
+                    widget: list
+                    label: Bullet Points
+                    required: false
+                  - name: logo
+                    widget: image
+                    label: Organisation Logo
+                    required: false
+                    media_folder: /public/images/experience
+                    public_folder: /images/experience
+
+          - name: cv
+            widget: object
+            label: Resume / CV
+            fields:
+              - { name: heading,      widget: string, label: "Section heading" }
+              - { name: intro,        widget: text,   label: "Intro text" }
+              - { name: button_label, widget: string, label: "Download button label" }
+              - name: file
+                widget: file
+                label: CV PDF
+                hint: "Upload your CV PDF. Will be served at the uploaded path."
+                media_folder: /public
+                public_folder: /
+                default: /cv.pdf

@@ -24,20 +24,68 @@ const projects = defineCollection({
 const about = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/about' }),
   schema: z.object({
-    photo: z.string().optional(),
-    education: z.array(z.object({
-      degree:      z.string(),
-      institution: z.string(),
-      year:        z.string(),
-    })),
-    experience: z.array(z.object({
-      role:    z.string(),
-      company: z.string(),
-      period:  z.string(),
-      bullets: z.array(z.string()),
-    })),
-    skills: z.record(z.string(), z.array(z.string())),
-    awards: z.array(z.string()).optional(),
+    professional_summary: z.object({
+      heading:   z.string(),
+      photo:     z.string().optional(),
+      photo_alt: z.string().optional(),
+    }),
+    technical_skills: z.object({
+      heading: z.string(),
+      groups:  z.array(z.object({
+        name:   z.string(),
+        skills: z.array(z.string()),
+      })),
+    }),
+    education: z.object({
+      heading: z.string(),
+      entries: z.array(z.object({
+        degree:      z.string(),
+        institution: z.string(),
+        location:    z.string().optional(),
+        start_date:  z.string(),
+        end_date:    z.string(),
+        description: z.string().optional(),
+        logo:        z.string().optional(),
+      })),
+    }),
+  }),
+});
+
+const experience = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/experience' }),
+  schema: z.object({
+    work_history: z.object({
+      heading: z.string(),
+      entries: z.array(z.object({
+        role:        z.string(),
+        company:     z.string(),
+        location:    z.string().optional(),
+        start_date:  z.string(),
+        end_date:    z.string(),
+        description: z.string(),
+        bullets:     z.array(z.string()),
+        logo:        z.string().optional(),
+      })),
+    }),
+    volunteering: z.object({
+      heading: z.string(),
+      entries: z.array(z.object({
+        role:         z.string(),
+        organization: z.string(),
+        location:     z.string().optional(),
+        start_date:   z.string(),
+        end_date:     z.string(),
+        description:  z.string(),
+        bullets:      z.array(z.string()).optional(),
+        logo:         z.string().optional(),
+      })),
+    }),
+    cv: z.object({
+      heading:      z.string(),
+      intro:        z.string(),
+      button_label: z.string(),
+      file:         z.string(),
+    }),
   }),
 });
 
@@ -61,4 +109,4 @@ const site = defineCollection({
   }),
 });
 
-export const collections = { projects, about, site };
+export const collections = { projects, about, experience, site };

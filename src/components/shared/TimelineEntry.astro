@@ -1,0 +1,55 @@
+---
+interface Props {
+  title:       string;
+  subtitle:    string;
+  location?:   string;
+  start_date:  string;
+  end_date:    string;
+  description?: string;
+  bullets?:    string[];
+  logo?:       string;
+}
+
+const { title, subtitle, location, start_date, end_date, description, bullets, logo } = Astro.props;
+const dateRange = `${start_date} – ${end_date}`;
+---
+
+<li class="ml-6 relative">
+  <!-- Teal dot marker -->
+  <span
+    class="absolute -left-[1.625rem] top-1 flex items-center justify-center w-3.5 h-3.5 rounded-full bg-bg-base border-2 border-accent"
+    aria-hidden="true"
+  ></span>
+
+  <div class="flex items-start gap-4">
+    {logo && (
+      <img
+        src={logo}
+        alt={`${subtitle} logo`}
+        width="40"
+        height="40"
+        class="w-10 h-10 rounded object-contain bg-bg-elevated border border-bg-border shrink-0 mt-0.5"
+      />
+    )}
+    <div class="min-w-0 flex-1">
+      <p class="font-mono text-xs text-accent mb-1">{dateRange}</p>
+      <h3 class="font-heading font-semibold text-fg-primary text-base leading-snug">{title}</h3>
+      <p class="font-sans text-fg-secondary text-sm">
+        {subtitle}{location ? ` · ${location}` : ''}
+      </p>
+      {description && (
+        <p class="font-sans text-fg-tertiary text-sm mt-1.5 leading-relaxed">{description}</p>
+      )}
+      {bullets && bullets.length > 0 && (
+        <ul class="mt-2 space-y-1 list-none m-0 p-0">
+          {bullets.map(bullet => (
+            <li class="font-sans text-fg-secondary text-sm flex gap-2">
+              <span class="text-accent shrink-0 mt-0.5" aria-hidden="true">·</span>
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+</li>

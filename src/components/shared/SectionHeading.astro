@@ -1,0 +1,17 @@
+---
+interface Props {
+  heading:    string;
+  subheading?: string;
+}
+
+const { heading, subheading } = Astro.props;
+---
+
+<div class="mb-8 md:mb-10">
+  <h2 class="font-heading font-semibold text-fg-primary text-2xl md:text-3xl lg:text-4xl">
+    {heading}
+  </h2>
+  {subheading && (
+    <p class="font-sans text-fg-secondary text-base mt-2">{subheading}</p>
+  )}
+</div>
