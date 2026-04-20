@@ -49,12 +49,15 @@ export default function PatronusScene({
   const animsRef             = useRef<Animation[]>([]);
   const rafRef               = useRef<number>(0);
   const canvasRef            = useRef<HTMLCanvasElement | null>(null);
+  const svgRef               = useRef<SVGSVGElement | null>(null);
   const particlesRef         = useRef<HTMLElement[]>([]);
 
   const cancelAll = useCallback(() => {
     animsRef.current.forEach(a => a.cancel());
     cancelAnimationFrame(rafRef.current);
     canvasRef.current = null;
+    svgRef.current?.remove();
+    svgRef.current = null;
     particlesRef.current.forEach(p => p.remove());
     particlesRef.current = [];
   }, []);
@@ -103,43 +106,60 @@ export default function PatronusScene({
     );
 
     /* Glow radii proportional to stag size so mobile doesn't become a blob */
-    const r1 = Math.round(size * 0.11);   // tight inner: 15px @ 140, 31px @ 280
-    const r2 = Math.round(size * 0.23);   // mid ring:    32px @ 140, 64px @ 280
-    const r3 = Math.round(size * 0.43);   // outer halo:  60px @ 140, 120px @ 280
+    const r1  = Math.round(size * 0.11);  // tight inner: 15px @ 140, 31px @ 280
+    const r2  = Math.round(size * 0.23);  // mid ring:    32px @ 140, 64px @ 280
     const r1p = Math.round(size * 0.17);  // peak inner:  24px @ 140, 48px @ 280
     const r2p = Math.round(size * 0.34);  // peak mid:    48px @ 140, 95px @ 280
-    const r3p = Math.round(size * 0.57);  // peak outer:  80px @ 140, 160px @ 280
     const glow = stag.animate(
       [
-        { filter: `drop-shadow(0 0 ${r1}px rgba(63,224,197,0.9)) drop-shadow(0 0 ${r2}px rgba(63,224,197,0.5)) drop-shadow(0 0 ${r3}px rgba(120,240,220,0.3)) brightness(1.15)` },
-        { filter: `drop-shadow(0 0 ${r1p}px rgba(63,224,197,1))  drop-shadow(0 0 ${r2p}px rgba(63,224,197,0.7)) drop-shadow(0 0 ${r3p}px rgba(120,240,220,0.5)) brightness(1.5)` },
-        { filter: `drop-shadow(0 0 ${r1}px rgba(63,224,197,0.9)) drop-shadow(0 0 ${r2}px rgba(63,224,197,0.5)) drop-shadow(0 0 ${r3}px rgba(120,240,220,0.3)) brightness(1.15)` },
+        { filter: `drop-shadow(0 0 ${r1}px rgba(63,224,197,0.9)) drop-shadow(0 0 ${r2}px rgba(63,224,197,0.5)) brightness(1.15)` },
+        { filter: `drop-shadow(0 0 ${r1p}px rgba(63,224,197,1))  drop-shadow(0 0 ${r2p}px rgba(63,224,197,0.7)) brightness(1.5)` },
+        { filter: `drop-shadow(0 0 ${r1}px rgba(63,224,197,0.9)) drop-shadow(0 0 ${r2}px rgba(63,224,197,0.5)) brightness(1.15)` },
       ],
       { duration: 2200, iterations: Infinity, easing: 'ease-in-out' },
     );
 
     animsRef.current = [glide, bob, glow];
 
-    /* ── Canvas mask setup (half-res) ── */
-    const cW = Math.max(1, Math.floor(W / 2));
-    const cH = Math.max(1, Math.floor(H / 2));
-    const canvas = document.createElement('canvas');
-    canvas.width  = cW;
-    canvas.height = cH;
-    canvasRef.current = canvas;
+    /* ── SVG mask setup (replaces canvas + toDataURL) ── */
+    const svgNS    = 'http://www.w3.org/2000/svg';
+    const svgEl    = document.createElementNS(svgNS, 'svg') as SVGSVGElement;
+    svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svgEl.setAttribute('aria-hidden', 'true');
+    svgEl.style.cssText = `position:absolute;left:0;top:0;width:${W}px;height:${H}px;overflow:visible;pointer-events:none;z-index:0`;
 
-    const ctx = canvas.getContext('2d')!;
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, cW, cH);
+    const defsEl   = document.createElementNS(svgNS, 'defs');
+    const filterId = 'patronus-hole-blur';
+    const filterEl = document.createElementNS(svgNS, 'filter');
+    filterEl.id = filterId;
+    filterEl.setAttribute('x', '-60%');
+    filterEl.setAttribute('y', '-60%');
+    filterEl.setAttribute('width', '220%');
+    filterEl.setAttribute('height', '220%');
+    const blurEl = document.createElementNS(svgNS, 'feGaussianBlur');
+    blurEl.setAttribute('in', 'SourceGraphic');
+    blurEl.setAttribute('stdDeviation', String(Math.round(size * 0.14)));
+    filterEl.appendChild(blurEl);
+    defsEl.appendChild(filterEl);
 
-    fog.style.maskSize                  = '100% 100%';
-    fog.style.maskRepeat                = 'no-repeat';
-    (fog.style as any).webkitMaskSize   = '100% 100%';
-    (fog.style as any).webkitMaskRepeat = 'no-repeat';
+    const maskId = 'patronus-fog-mask';
+    const maskEl = document.createElementNS(svgNS, 'mask');
+    maskEl.id = maskId;
+    maskEl.setAttribute('maskUnits', 'userSpaceOnUse');
+    const bgRect = document.createElementNS(svgNS, 'rect');
+    bgRect.setAttribute('x', '0');
+    bgRect.setAttribute('y', '0');
+    bgRect.setAttribute('width', String(W));
+    bgRect.setAttribute('height', String(H));
+    bgRect.setAttribute('fill', 'white');
+    maskEl.appendChild(bgRect);
+    defsEl.appendChild(maskEl);
+    svgEl.appendChild(defsEl);
+    container.appendChild(svgEl);
+    svgRef.current = svgEl;
 
-    const initUrl = canvas.toDataURL();
-    fog.style.maskImage                  = `url(${initUrl})`;
-    (fog.style as any).webkitMaskImage   = `url(${initUrl})`;
+    fog.style.mask = `url(#${maskId})`;
+    (fog.style as any).webkitMask = `url(#${maskId})`;
 
     /* ── Particle config ── */
     const maxParticles    = W >= 1024 ? 60 : W >= 768 ? 30 : 15;
@@ -147,36 +167,30 @@ export default function PatronusScene({
     let   lastMaskFrame   = 0;
     let   lastSpawnTime   = 0;
     let   nextSpawnGap    = 60;
+    const cr = container.getBoundingClientRect();
 
     /* ── Combined RAF loop ── */
     function tick(ts: number) {
       const s  = stagRef.current;
       const f  = fogRef.current;
-      const c  = containerRef.current;
       const pc = particleContainerRef.current;
-      if (!s || !f || !c) { rafRef.current = requestAnimationFrame(tick); return; }
+      if (!s || !f) { rafRef.current = requestAnimationFrame(tick); return; }
 
       const sr = s.getBoundingClientRect();
-      const cr = c.getBoundingClientRect();
 
       /* Fog erasure at ~30 fps desktop / ~20 fps mobile */
       if (ts - lastMaskFrame >= maskThrottle) {
         lastMaskFrame = ts;
-        const mx = (sr.left + sr.width  / 2 - cr.left) * 0.5;
-        const my = (sr.top  + sr.height / 2 - cr.top)  * 0.5;
-        const R  = Math.round(size * 0.35); // erase radius scales with stag size
-        const g  = ctx.createRadialGradient(mx, my, 0, mx, my, R);
-        g.addColorStop(0,   'rgba(0,0,0,1)');
-        g.addColorStop(0.6, 'rgba(0,0,0,1)');
-        g.addColorStop(1,   'rgba(0,0,0,0)');
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(mx, my, R, 0, Math.PI * 2);
-        ctx.fill();
-        const url = canvas.toDataURL();
-        f.style.maskImage                = `url(${url})`;
-        (f.style as any).webkitMaskImage = `url(${url})`;
+        const mx = Math.round(sr.left + sr.width  / 2 - cr.left);
+        const my = Math.round(sr.top  + sr.height / 2 - cr.top);
+        const R  = Math.round(size * 0.5);
+        const circleEl = document.createElementNS(svgNS, 'circle');
+        circleEl.setAttribute('cx', String(mx));
+        circleEl.setAttribute('cy', String(my));
+        circleEl.setAttribute('r',  String(R));
+        circleEl.setAttribute('fill', 'black');
+        circleEl.setAttribute('filter', `url(#${filterId})`);
+        maskEl.appendChild(circleEl);
       }
 
       /* Particle spawn — only while stag overlaps the visible scene */
@@ -255,8 +269,8 @@ export default function PatronusScene({
   /* Clear mask on reset */
   useEffect(() => {
     if (phase === 'gloom' && fogRef.current) {
-      fogRef.current.style.maskImage = '';
-      (fogRef.current.style as any).webkitMaskImage = '';
+      fogRef.current.style.mask = '';
+      (fogRef.current.style as any).webkitMask = '';
     }
   }, [phase]);
 
@@ -341,6 +355,7 @@ export default function PatronusScene({
                   rgba(10,25,38,${b.opacity * 0.6}) 50%,
                   transparent 75%)`,
                 filter: 'blur(32px)',
+                willChange: 'transform',
                 animation: `fog-drift-${(i % 2) + 1} ${b.dur}s ease-in-out infinite ${b.delay}s`,
               }}
             />
@@ -431,6 +446,7 @@ export default function PatronusScene({
             mixBlendMode: 'screen',
             zIndex: 5,
             pointerEvents: 'none',
+            willChange: 'transform',
             filter: 'drop-shadow(0 0 32px rgba(63,224,197,0.9)) drop-shadow(0 0 64px rgba(63,224,197,0.5)) brightness(1.2)',
             animation: phase === 'fading'
               ? 'stag-fade-out 1s ease forwards'
