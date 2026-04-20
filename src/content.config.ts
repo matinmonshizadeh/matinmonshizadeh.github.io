@@ -1,6 +1,13 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+// Accepts a valid https?:// URL or an empty string (what the CMS writes for blank fields).
+// Empty strings are coerced to undefined before Zod's URL check runs.
+const optionalUrl = z.preprocess(
+  (val) => (val === '' ? undefined : val),
+  z.string().url().optional()
+);
+
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
@@ -13,10 +20,10 @@ const projects = defineCollection({
     description: z.string(),
     featured:    z.boolean().default(false),
     links: z.object({
-      github: z.string().url().optional(),
-      demo:   z.string().url().optional(),
-      paper:  z.string().url().optional(),
-      play:   z.string().url().optional(),
+      github: optionalUrl,
+      demo:   optionalUrl,
+      paper:  optionalUrl,
+      play:   optionalUrl,
     }).optional(),
   }),
 });
@@ -99,7 +106,7 @@ const site = defineCollection({
     email:    z.string().email(),
     github:   z.string().url(),
     linkedin:  z.string().url(),
-    artstation: z.string().url().optional(),
+    artstation: optionalUrl,
     cv:       z.string(),
     location: z.string().optional(),
     projects_page_desc:       z.string().optional(),

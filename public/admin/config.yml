@@ -71,10 +71,26 @@ collections:
         required: false
         collapsed: true
         fields:
-          - { name: github, widget: string, label: GitHub URL, required: false }
-          - { name: demo,   widget: string, label: Live Demo URL, required: false }
-          - { name: paper,  widget: string, label: Paper URL, required: false }
-          - { name: play,   widget: string, label: Play URL (in-browser), required: false }
+          - name: github
+            widget: string
+            label: GitHub URL
+            required: false
+            pattern: ['^(https?://.+)?$', 'Must be a full URL starting with https:// (or leave empty)']
+          - name: demo
+            widget: string
+            label: Live Demo URL
+            required: false
+            pattern: ['^(https?://.+)?$', 'Must be a full URL starting with https:// (or leave empty)']
+          - name: paper
+            widget: string
+            label: Paper URL
+            required: false
+            pattern: ['^(https?://.+)?$', 'Must be a full URL starting with https:// (or leave empty)']
+          - name: play
+            widget: string
+            label: Play URL (in-browser)
+            required: false
+            pattern: ['^(https?://.+)?$', 'Must be a full URL starting with https:// (or leave empty)']
 
       - name: body
         widget: markdown
@@ -94,9 +110,19 @@ collections:
           - { name: tagline,  widget: string, label: "Hero tagline" }
           - { name: intro,    widget: text,   label: "Intro strip paragraph" }
           - { name: email,    widget: string, label: "Email address" }
-          - { name: github,   widget: string, label: "GitHub profile URL" }
-          - { name: linkedin,   widget: string, label: "LinkedIn profile URL" }
-          - { name: artstation, widget: string, label: "ArtStation profile URL" }
+          - name: github
+            widget: string
+            label: "GitHub profile URL"
+            pattern: ['^https?://.+', 'Must be a full URL starting with https://']
+          - name: linkedin
+            widget: string
+            label: "LinkedIn profile URL"
+            pattern: ['^https?://.+', 'Must be a full URL starting with https://']
+          - name: artstation
+            widget: string
+            label: "ArtStation profile URL"
+            required: false
+            pattern: ['^(https?://.+)?$', 'Must be a full URL starting with https:// (or leave empty)']
           - { name: cv,       widget: string, label: "CV path (e.g. /cv.pdf)" }
           - { name: location, widget: string, label: "Location", required: false }
           - name: projects_page_desc

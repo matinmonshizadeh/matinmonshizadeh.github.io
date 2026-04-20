@@ -17,7 +17,6 @@ stack:
   - CSS
 links:
   github: https://github.com/matinmonshizadeh/The-Dicee-Game
-  demo: ""
   play: https://matinmonshizadeh.github.io/The-Dicee-Game/
 ---
 ## Problem
