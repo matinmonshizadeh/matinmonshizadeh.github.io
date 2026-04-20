@@ -37,7 +37,10 @@ export default function PatronusScene({
     : false;
 
   const [phase, setPhase]       = useState<Phase>(prefersReduced ? 'revealed' : 'gloom');
-  const [stagSize, setStagSize] = useState(280);
+  const [stagSize, setStagSize] = useState(() => {
+    if (typeof window === 'undefined') return 280;
+    return getStagSize(window.innerWidth);
+  });
 
   const containerRef         = useRef<HTMLDivElement>(null);
   const stagRef              = useRef<HTMLImageElement>(null);
@@ -75,8 +78,9 @@ export default function PatronusScene({
     stag.style.left = '0';
     stag.style.top  = `calc(50% - ${size / 2}px)`;
 
-    const startX = -(size + 50);
-    const endX   = W + 50;
+    const startX   = -(size + 50);
+    const endX     = W + 50;
+    const duration = W >= 768 ? 4000 : 2500;
 
     const glide = stag.animate(
       [
@@ -85,7 +89,7 @@ export default function PatronusScene({
         { transform: `translateX(${endX   - size * 1.2}px)`,     opacity: 1, offset: 0.95 },
         { transform: `translateX(${endX}px)`,                    opacity: 0 },
       ],
-      { duration: 4000, easing: 'cubic-bezier(0.25, 0.1, 0.25, 1.0)',
+      { duration, easing: 'cubic-bezier(0.25, 0.1, 0.25, 1.0)',
         fill: 'forwards', composite: 'replace' },
     );
 
@@ -98,11 +102,18 @@ export default function PatronusScene({
       { duration: 1100, iterations: Infinity, easing: 'ease-in-out', composite: 'add' },
     );
 
+    /* Glow radii proportional to stag size so mobile doesn't become a blob */
+    const r1 = Math.round(size * 0.11);   // tight inner: 15px @ 140, 31px @ 280
+    const r2 = Math.round(size * 0.23);   // mid ring:    32px @ 140, 64px @ 280
+    const r3 = Math.round(size * 0.43);   // outer halo:  60px @ 140, 120px @ 280
+    const r1p = Math.round(size * 0.17);  // peak inner:  24px @ 140, 48px @ 280
+    const r2p = Math.round(size * 0.34);  // peak mid:    48px @ 140, 95px @ 280
+    const r3p = Math.round(size * 0.57);  // peak outer:  80px @ 140, 160px @ 280
     const glow = stag.animate(
       [
-        { filter: 'drop-shadow(0 0 32px rgba(63,224,197,0.9)) drop-shadow(0 0 64px rgba(63,224,197,0.5)) drop-shadow(0 0 120px rgba(120,240,220,0.3)) brightness(1.15)' },
-        { filter: 'drop-shadow(0 0 48px rgba(63,224,197,1))   drop-shadow(0 0 96px rgba(63,224,197,0.7)) drop-shadow(0 0 160px rgba(120,240,220,0.5)) brightness(1.5)'  },
-        { filter: 'drop-shadow(0 0 32px rgba(63,224,197,0.9)) drop-shadow(0 0 64px rgba(63,224,197,0.5)) drop-shadow(0 0 120px rgba(120,240,220,0.3)) brightness(1.15)' },
+        { filter: `drop-shadow(0 0 ${r1}px rgba(63,224,197,0.9)) drop-shadow(0 0 ${r2}px rgba(63,224,197,0.5)) drop-shadow(0 0 ${r3}px rgba(120,240,220,0.3)) brightness(1.15)` },
+        { filter: `drop-shadow(0 0 ${r1p}px rgba(63,224,197,1))  drop-shadow(0 0 ${r2p}px rgba(63,224,197,0.7)) drop-shadow(0 0 ${r3p}px rgba(120,240,220,0.5)) brightness(1.5)` },
+        { filter: `drop-shadow(0 0 ${r1}px rgba(63,224,197,0.9)) drop-shadow(0 0 ${r2}px rgba(63,224,197,0.5)) drop-shadow(0 0 ${r3}px rgba(120,240,220,0.3)) brightness(1.15)` },
       ],
       { duration: 2200, iterations: Infinity, easing: 'ease-in-out' },
     );
@@ -132,6 +143,7 @@ export default function PatronusScene({
 
     /* ── Particle config ── */
     const maxParticles    = W >= 1024 ? 60 : W >= 768 ? 30 : 15;
+    const maskThrottle    = W >= 768 ? 33 : 50;  // 30fps desktop, 20fps mobile
     let   lastMaskFrame   = 0;
     let   lastSpawnTime   = 0;
     let   nextSpawnGap    = 60;
@@ -147,8 +159,8 @@ export default function PatronusScene({
       const sr = s.getBoundingClientRect();
       const cr = c.getBoundingClientRect();
 
-      /* Fog erasure at ~30 fps */
-      if (ts - lastMaskFrame >= 33) {
+      /* Fog erasure at ~30 fps desktop / ~20 fps mobile */
+      if (ts - lastMaskFrame >= maskThrottle) {
         lastMaskFrame = ts;
         const mx = (sr.left + sr.width  / 2 - cr.left) * 0.5;
         const my = (sr.top  + sr.height / 2 - cr.top)  * 0.5;
@@ -282,7 +294,8 @@ export default function PatronusScene({
             color: 'rgba(111,232,212,0.7)',
             fontSize: '0.75rem',
             letterSpacing: '0.08em',
-            padding: '0.35rem 0.75rem',
+            padding: '0.5rem 1rem',
+            minHeight: '44px',
             cursor: 'pointer',
             fontFamily: 'Inter, sans-serif',
             transition: 'color 150ms, border-color 150ms',
