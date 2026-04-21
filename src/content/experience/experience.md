@@ -11,13 +11,11 @@ work_history:
       description: Short description
       bullets:
         - Engineered 3D roof models from megatile images and point clouds via
-          mathematical plane fitting
-        - normal vectors
-        - and precise edge alignment.
-        - Deployed YOLO and depth estimation models (Depth Anything
-        - Depth Pro) for structural segmentation
-        - edge classification
-        - and obstacle removal.
+          mathematical plane fitting, normal vectors, and precise edge
+          alignment.
+        - Deployed YOLO and depth estimation models (Depth Anything, Depth Pro)
+          for structural segmentation, edge classification, and obstacle
+          removal.
         - Accelerated heavy image processing pipelines and spatial datasets
           using matrix vectorization and multi-threading.
     - role: Teaching Assistant — Computer Vision
