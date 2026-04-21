@@ -224,7 +224,7 @@ collections:
                   - { name: location,    widget: string, label: Location, required: false }
                   - { name: start_date,  widget: string, label: Start Date }
                   - { name: end_date,    widget: string, label: End Date }
-                  - { name: description, widget: text,   label: Short Description }
+                  - { name: description, widget: text, label: Short Description, required: false }
                   - name: bullets
                     widget: list
                     label: Bullet Points
@@ -257,7 +257,7 @@ collections:
                   - { name: location,     widget: string, label: Location, required: false }
                   - { name: start_date,   widget: string, label: Start Date }
                   - { name: end_date,     widget: string, label: End Date }
-                  - { name: description,  widget: text,   label: Short Description }
+                  - { name: description, widget: text, label: Short Description, required: false }
                   - name: bullets
                     widget: list
                     label: Bullet Points
