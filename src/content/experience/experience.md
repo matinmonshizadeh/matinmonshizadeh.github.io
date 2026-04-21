@@ -8,7 +8,7 @@ work_history:
       location: Shiraz
       start_date: Oct 2024
       end_date: Mar 2025
-      description: Short description
+      description: Simulated 3D houses from 2D aerial images and optimized previous code.
       bullets:
         - Engineered 3D roof models from megatile images and point clouds via
           mathematical plane fitting, normal vectors, and precise edge
