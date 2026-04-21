@@ -228,7 +228,14 @@ collections:
                   - name: bullets
                     widget: list
                     label: Bullet Points
-                    hint: "2–4 achievement or responsibility bullets"
+                    required: false
+                    min: 0
+                    max: 6
+                    hint: "Add 2–4 bullets. Click + to add, drag to reorder, X to remove."
+                    field:
+                      label: Bullet
+                      name: bullet
+                      widget: string
                   - name: logo
                     widget: image
                     label: Company Logo
@@ -255,6 +262,13 @@ collections:
                     widget: list
                     label: Bullet Points
                     required: false
+                    min: 0
+                    max: 6
+                    hint: "Click + to add a bullet, drag to reorder, X to remove."
+                    field:
+                      label: Bullet
+                      name: bullet
+                      widget: string
                   - name: logo
                     widget: image
                     label: Organisation Logo
