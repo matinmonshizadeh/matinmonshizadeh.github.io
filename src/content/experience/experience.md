@@ -18,16 +18,20 @@ work_history:
           removal.
         - Accelerated heavy image processing pipelines and spatial datasets
           using matrix vectorization and multi-threading.
-    - role: Teaching Assistant — Computer Vision
-      company: Placeholder University
-      location: ""
-      start_date: "2023"
-      end_date: "2023"
-      description: Assisted in delivering the undergraduate Computer Vision course.
+    - role: "3D Mountain Simulation: Predicting Flood Paths — Academic Research"
+      company: Shiraz University
+      location: Shiraz
+      start_date: Jun 2024
+      end_date: Sep 2024
+      description: 3D terrain simulation and visualization
       bullets:
-        - Ran weekly lab sessions on classical CV techniques (Harris, SIFT,
-          optical flow).
-        - Graded assignments and provided feedback on PyTorch implementations.
+        - Simulated 3D terrain, predicted flood paths, and calculated water
+          volume using real-world elevation data in Python.
+        - Applied Delaunay triangulation to model the terrain and utilized
+          gradient-based methods to predict water flow.
+        - Visualized water accumulation in lower elevations, such as valleys and
+          flat areas, through 3D terrain plots, flood paths, and a heatmap of
+          accumulated water volume.
 volunteering:
   heading: Volunteering
   entries:
