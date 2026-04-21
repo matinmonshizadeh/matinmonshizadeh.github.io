@@ -2,18 +2,24 @@
 work_history:
   heading: Internships & Work History
   entries:
-    - role: Research Assistant
-      company: Placeholder Lab
-      location: Remote
-      start_date: "2023"
-      end_date: Present
-      description: Conducting research on efficient deep learning architectures for
-        real-time visual tasks.
+    - role: Junior Applied R&D Engineer in Computer Vision, Computer Graphics, and
+        Remote Sensing
+      company: Deed Asia Development Group Ltd.
+      location: Shiraz
+      start_date: Oct 2024
+      end_date: Mar 2025
+      description: Short description
       bullets:
-        - Researching efficient architectures for real-time semantic
-          segmentation on embedded hardware.
-        - Developing image processing pipelines for annotating large-scale
-          medical imaging datasets.
+        - Engineered 3D roof models from megatile images and point clouds via
+          mathematical plane fitting
+        - normal vectors
+        - and precise edge alignment.
+        - Deployed YOLO and depth estimation models (Depth Anything
+        - Depth Pro) for structural segmentation
+        - edge classification
+        - and obstacle removal.
+        - Accelerated heavy image processing pipelines and spatial datasets
+          using matrix vectorization and multi-threading.
     - role: Teaching Assistant — Computer Vision
       company: Placeholder University
       location: ""
