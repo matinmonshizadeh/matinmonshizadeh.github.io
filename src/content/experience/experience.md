@@ -32,6 +32,17 @@ work_history:
         - Visualized water accumulation in lower elevations, such as valleys and
           flat areas, through 3D terrain plots, flood paths, and a heatmap of
           accumulated water volume.
+    - role: Teaching Assistant
+      company: Department of Computer Engineering at Shiraz University
+      description: Teaching Assistant in several courses
+      location: Shriaz
+      start_date: Feb 2022
+      end_date: Jan 2024
+      bullets:
+        - Fundamentals of Computer and Programming (Python)
+        - Object Oriented Programming (Java)
+        - Database Design Principles
+        - Operating Systems
 volunteering:
   heading: Volunteering
   entries:
