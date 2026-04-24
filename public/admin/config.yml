@@ -138,6 +138,25 @@ collections:
           - name: games_section_desc
             widget: string
             label: "Games section — description"
+          - name: contact_cta_text
+            widget: text
+            label: "Contact CTA — body text"
+            hint: "Shown below the 'Get in Touch' heading on the home page."
+            required: false
+          - name: contact_cta_button
+            widget: string
+            label: "Contact CTA — button label"
+            required: false
+          - name: projects_page_meta_desc
+            widget: text
+            label: "Projects page — meta description"
+            hint: "Used in <meta name=description> for /projects."
+            required: false
+          - name: contact_page_meta_desc
+            widget: string
+            label: "Contact page — meta description"
+            hint: "Used in <meta name=description> for /contact."
+            required: false
 
   # ── About ──────────────────────────────────────────────────────────────────
   - name: about

@@ -6,10 +6,10 @@ import patronusSrc   from '../assets/hero/patronus.png';
 import letterSrc     from '../assets/hero/magical-letter.png';
 
 const site = await getEntry('site', 'config');
-const { name, github, linkedin, email, location } = site!.data;
+const { name, github, linkedin, email, location, contact_page_meta_desc } = site!.data;
 ---
 
-<BaseLayout title={`Contact — ${name}`} description="Cast a spell to reveal my contact details.">
+<BaseLayout title={`Contact — ${name}`} description={contact_page_meta_desc ?? 'Cast a spell to reveal my contact details.'}>
   <PatronusScene
     client:load
     patronusSrc={patronusSrc.src}

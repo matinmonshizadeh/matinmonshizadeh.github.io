@@ -9,12 +9,12 @@ const independent  = allProjects.filter(p => p.data.type === 'independent');
 const games        = allProjects.filter(p => p.data.type === 'game');
 
 const site = await getEntry('site', 'config');
-const { name, projects_page_desc, university_section_desc, independent_section_desc, games_section_desc } = site!.data;
+const { name, projects_page_desc, university_section_desc, independent_section_desc, games_section_desc, projects_page_meta_desc } = site!.data;
 ---
 
 <BaseLayout
   title={`Projects — ${name}`}
-  description="University research projects in computer vision and graphics, plus interactive browser games."
+  description={projects_page_meta_desc ?? 'University research projects in computer vision and graphics, plus interactive browser games.'}
 >
 
   <!-- Page header -->
@@ -63,9 +63,13 @@ const { name, projects_page_desc, university_section_desc, independent_section_d
           {independent_section_desc ?? "Side projects, research explorations, and experiments I built on my own time."}
         </p>
       </div>
-      <div data-animate>
-        <ProjectGrid projects={independent} />
-      </div>
+      {independent.length > 0 ? (
+        <div data-animate>
+          <ProjectGrid projects={independent} />
+        </div>
+      ) : (
+        <p class="font-sans text-fg-tertiary text-sm" data-animate>More projects coming soon.</p>
+      )}
     </section>
 
     <!-- Divider: independent → games -->

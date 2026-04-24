@@ -113,6 +113,10 @@ const site = defineCollection({
     university_section_desc:  z.string().optional(),
     independent_section_desc: z.string().optional(),
     games_section_desc:       z.string().optional(),
+    contact_cta_text:         z.string().optional(),
+    contact_cta_button:       z.string().optional(),
+    projects_page_meta_desc:  z.string().optional(),
+    contact_page_meta_desc:   z.string().optional(),
   }),
 });
 

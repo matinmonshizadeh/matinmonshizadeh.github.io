@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/shared/SectionHeading.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -35,6 +36,9 @@ const formattedDate = date.toLocaleDateString('en-GB', { year: 'numeric', month:
       alt={`${title} cover image`}
       width="1200"
       height="675"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
       class="w-full h-full object-cover"
     />
   </div>
@@ -75,9 +79,7 @@ const formattedDate = date.toLocaleDateString('en-GB', { year: 'numeric', month:
 
     <!-- Tech stack -->
     <section class="mb-10" aria-labelledby="stack-heading">
-      <h2 id="stack-heading" class="font-heading font-semibold text-fg-primary text-xl mb-4">
-        Tech Stack
-      </h2>
+      <SectionHeading heading="Tech Stack" id="stack-heading" />
       <ul class="flex flex-wrap gap-2 list-none m-0 p-0" role="list">
         {stack.map(item => (
           <li>
@@ -180,7 +182,7 @@ const formattedDate = date.toLocaleDateString('en-GB', { year: 'numeric', month:
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: 1.25rem;
-    color: #E8F4F4;
+    color: var(--color-fg-primary);
     margin-top: 2rem;
     margin-bottom: 0.75rem;
   }
@@ -188,18 +190,18 @@ const formattedDate = date.toLocaleDateString('en-GB', { year: 'numeric', month:
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: 1.1rem;
-    color: #E8F4F4;
+    color: var(--color-fg-primary);
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
   }
   .prose-content :global(p) {
     font-family: 'Inter', sans-serif;
-    color: #9BB3B8;
+    color: var(--color-fg-secondary);
     line-height: 1.75;
     margin-bottom: 1rem;
   }
   .prose-content :global(ul), .prose-content :global(ol) {
-    color: #9BB3B8;
+    color: var(--color-fg-secondary);
     padding-left: 1.5rem;
     margin-bottom: 1rem;
     line-height: 1.75;
@@ -218,29 +220,29 @@ const formattedDate = date.toLocaleDateString('en-GB', { year: 'numeric', month:
   .prose-content :global(th) {
     text-align: left;
     padding: 0.5rem 1rem;
-    border-bottom: 1px solid #16222C;
-    color: #E8F4F4;
+    border-bottom: 1px solid var(--color-bg-border);
+    color: var(--color-fg-primary);
     font-weight: 500;
   }
   .prose-content :global(td) {
     padding: 0.5rem 1rem;
-    border-bottom: 1px solid #16222C;
-    color: #9BB3B8;
+    border-bottom: 1px solid var(--color-bg-border);
+    color: var(--color-fg-secondary);
   }
   .prose-content :global(code) {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.85em;
-    color: #3FE0C5;
-    background: #0F1A22;
+    color: var(--color-accent);
+    background: var(--color-bg-elevated);
     padding: 0.15em 0.4em;
     border-radius: 0.25rem;
   }
   .prose-content :global(hr) {
-    border-color: #16222C;
+    border-color: var(--color-bg-border);
     margin: 2rem 0;
   }
   .prose-content :global(em) {
-    color: #9BB3B8;
+    color: var(--color-fg-secondary);
     font-style: italic;
   }
 </style>

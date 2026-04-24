@@ -18,4 +18,8 @@ university_section_desc: Research and coursework from my bachelor’s and master
 independent_section_desc: Side projects, research explorations, and experiments
   I have done independently.
 games_section_desc: Some funny games that I built in my free time.
+contact_cta_text: "Always open to collaborations, research opportunities, and a good conversation."
+contact_cta_button: "Let's Talk →"
+projects_page_meta_desc: "University research projects in computer vision and graphics, plus interactive browser games."
+contact_page_meta_desc: "Cast a spell to reveal my contact details."
 ---

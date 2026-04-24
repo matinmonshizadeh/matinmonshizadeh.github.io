@@ -1,6 +1,11 @@
 ---
 import keyImg from '../../assets/hero/key.png';
 import MagicalPowder from '../shared/MagicalPowder.astro';
+import { getEntry } from 'astro:content';
+
+const site = await getEntry('site', 'config');
+const ctaText   = site!.data.contact_cta_text   ?? 'Always open to collaborations, research opportunities, and a good conversation.';
+const ctaButton = site!.data.contact_cta_button ?? "Let's Talk →";
 
 // Key definitions — position, size, rotation, animation timing, opacity
 const keys = [
@@ -47,10 +52,8 @@ const keys = [
   <!-- CTA content -->
   <div class="cta-content" data-animate>
     <h2 id="contact-cta-heading" class="cta-heading">Get in Touch</h2>
-    <p class="cta-sub">
-      Always open to collaborations, research opportunities, and a good conversation.
-    </p>
-    <a href="/contact" class="cta-btn">Let's Talk →</a>
+    <p class="cta-sub">{ctaText}</p>
+    <a href="/contact" class="cta-btn">{ctaButton}</a>
   </div>
 
 </section>

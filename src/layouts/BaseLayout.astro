@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { getEntry } from 'astro:content';
+import forestImg from '../assets/hero/forest.png';
 
 interface Props {
   title?:       string;
@@ -9,8 +11,10 @@ interface Props {
   ogImage?:     string;
 }
 
+const site = await getEntry('site', 'config');
+
 const {
-  title = 'Matin Monshizadeh',
+  title = site!.data.name,
   description = "AI Master's student specialising in computer vision, image processing, and computer graphics.",
   ogImage = '/og-image.svg',
 } = Astro.props;
@@ -42,10 +46,17 @@ const ogImageURL   = new URL(ogImage, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image"       content={ogImageURL} />
 
+    <link rel="preload" as="image" href={forestImg.src} fetchpriority="high" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
   </head>
 
   <body class="bg-bg-base text-fg-primary min-h-screen flex flex-col">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-bg-base focus:text-sm focus:font-sans focus:font-medium focus:rounded"
+    >
+      Skip to content
+    </a>
     <Nav />
     <main id="main-content" class="flex-1">
       <slot />

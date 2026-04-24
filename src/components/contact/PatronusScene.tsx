@@ -286,7 +286,7 @@ export default function PatronusScene({
         position: 'relative',
         width: '100%',
         minHeight: '100vh',
-        background: '#050c12',
+        background: '#0A1118',
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
@@ -579,7 +579,7 @@ const POWDER = Array.from({ length: 50 }, (_, i) => ({
   dur:   10 + (i * 7 % 9),          // 10–18s
   delay: -((i * 5 + 3) % 14),       // 0–14s stagger
   size:  (i % 3) + 1,               // 1–3px
-  color: i % 5 === 0 ? '#B8F2E6' : i % 3 === 0 ? '#6FE8D4' : '#3FE0C5',
+  color: i % 5 === 0 ? '#E8F4F4' : i % 3 === 0 ? '#6FE8D4' : '#3FE0C5',
   sway:  ((i * 13 + 7) % 30) - 15,  // ±15px
 }));
 

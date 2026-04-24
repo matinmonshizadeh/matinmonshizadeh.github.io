@@ -27,7 +27,7 @@ const { name } = site!.data;
 
     <!-- Section 1: Work History -->
     <section class="mb-16" aria-labelledby="work-heading">
-      <SectionHeading heading={work_history.heading} />
+      <SectionHeading heading={work_history.heading} id="work-heading" />
       {work_history.entries.length > 0 ? (
         <ol class="relative border-l border-bg-border ml-3 space-y-8 list-none m-0 p-0" data-animate>
           {work_history.entries.map(entry => (
@@ -50,7 +50,7 @@ const { name } = site!.data;
 
     <!-- Section 2: Volunteering -->
     <section class="mb-16" aria-labelledby="volunteering-heading">
-      <SectionHeading heading={volunteering.heading} />
+      <SectionHeading heading={volunteering.heading} id="volunteering-heading" />
       {volunteering.entries.length > 0 ? (
         <ol class="relative border-l border-bg-border ml-3 space-y-8 list-none m-0 p-0" data-animate>
           {volunteering.entries.map(entry => (
@@ -73,7 +73,7 @@ const { name } = site!.data;
 
     <!-- Section 3: CV Download -->
     <section aria-labelledby="cv-heading" class="border-t border-bg-border pt-10">
-      <SectionHeading heading={cv.heading} />
+      <SectionHeading heading={cv.heading} id="cv-heading" />
       <p class="font-sans text-fg-secondary text-base mb-6">{cv.intro}</p>
       <a
         href={cv.file}

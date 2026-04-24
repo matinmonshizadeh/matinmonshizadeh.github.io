@@ -94,7 +94,7 @@ colors: {
 - **Headings:** Space Grotesk, weights 500–700
 - **Body:** Inter, weights 400–500
 - **Code / tech tags:** JetBrains Mono, weight 400
-- **Maximum 2 visible font weights on screen at once**
+- **Maximum 2 weights per typeface on screen at once** (Space Grotesk: 600 + 700 for heading hierarchy; Inter: 400 + 500 for body)
 
 ### Visual Effects
 - Teal glow on interactive elements: `box-shadow: 0 0 20px rgba(63, 224, 197, 0.4)` on hover
@@ -112,17 +112,18 @@ colors: {
 
 ```
 /                  → Home
-/projects          → Projects (two sections: University, Games)
+/projects          → Projects (three sections: University, Independent, Games)
 /projects/[slug]   → Individual project detail
-/about             → About
+/about             → About (Professional Summary, Technical Skills, Education)
+/experience        → Experience (Work History, Volunteering, CV Download)
+/contact           → Contact (Patronus animation scene)
 /admin             → Decap CMS admin panel
-
 ```
 Blog and Publications pages are deferred to v2.
 
 ### Global Elements (on every page)
-- **Nav bar:** left = name/logo → home; right = Projects, About, CV (PDF download). Sticky with backdrop blur on scroll. Mobile: hamburger menu.
-- **Footer:** left = copyright + "Built with Astro, hosted on GitHub Pages"; right = icon links (GitHub, LinkedIn, Google Scholar, Email). Single line, minimal.
+- **Nav bar:** left = name/logo → home; right = Projects, About, Experience, Projects, Contact. Sticky with backdrop blur on scroll. Mobile: hamburger menu.
+- **Footer:** left = copyright; right = icon links (GitHub, LinkedIn, ArtStation, Email). Single line, minimal.
 
 ### Page Sections
 
@@ -148,55 +149,56 @@ Blog and Publications pages are deferred to v2.
 7. Next/previous project navigation at bottom.
 
 **ABOUT (`/about`)**
-1. **Bio** — optional photo + 2–3 short paragraphs.
-2. **Education** — timeline, most recent first.
-3. **Experience** — timeline, 1–2 bullets per role.
-4. **Skills** — grouped (Languages, CV/ML, Graphics, Tools). **No skill bars / percentages.**
-5. **Awards / Certifications** (optional).
-6. **CV download button** + contact (email + socials + location).
+1. **Professional Summary** — optional photo + bio paragraphs (Markdown body).
+2. **Technical Skills** — grouped (Languages, CV/ML, Graphics, Tools). **No skill bars / percentages.**
+3. **Education** — timeline, most recent first.
+
+**EXPERIENCE (`/experience`)**
+1. **Internships & Work History** — timeline with role, company, location, dates, bullets.
+2. **Volunteering** — timeline with role, organisation, location, dates, bullets.
+3. **CV Download** — heading, intro text, download button (file path CMS-editable).
+
+**CONTACT (`/contact`)**
+Interactive Patronus animation scene. Reveals contact details (email, GitHub, LinkedIn, location) on interaction. Content (links, name, location) from site config.
 
 ---
 
 ## Content Schema
 
-Defined in `src/content/config.ts` using Astro content collections.
+Defined in `src/content.config.ts` using Astro content collections (Astro 5 format).
 
 ### Projects (`src/content/projects/*.md`)
 ```yaml
 title: string
-type: "university" | "game"
+type: "university" | "game" | "independent"
 date: date
-cover: image path
+cover: image path         # public path, e.g. /images/projects/foo.png
 tags: string[]
 stack: string[]
-description: string        # short, for cards
+description: string       # short, for cards
 featured: boolean
 links:
-  github?: string
+  github?: string         # full URL or empty string
   demo?: string
   paper?: string
   play?: string
 # Body (Markdown): Problem / Approach / Results
 ```
 
-### Site config (`src/content/site/site.json`)
-```json
-{
-  "name": "...",
-  "tagline": "...",
-  "role": "...",
-  "intro": "...",
-  "email": "...",
-  "github": "...",
-  "linkedin": "...",
-  "scholar": "...",
-  "cv": "/cv.pdf"
-}
-```
+### Site config (`src/content/site/config.md`)
+Key fields (see `src/content.config.ts` for full schema):
+- `name`, `role`, `tagline`, `intro`, `email`, `cv`
+- `github`, `linkedin`, `artstation` (optional)
+- `projects_page_desc`, `university_section_desc`, `independent_section_desc`, `games_section_desc`
+- `contact_cta_text`, `contact_cta_button`
+- `projects_page_meta_desc`, `contact_page_meta_desc`
 
 ### About (`src/content/about/about.md`)
-- Frontmatter: bio (photo path), education, experience, skills, awards.
-- Body: free-form bio paragraphs.
+- Frontmatter: `professional_summary` (heading, photo, photo_alt), `technical_skills` (heading, groups[]), `education` (heading, entries[]).
+- Body: Markdown prose for the Professional Summary section.
+
+### Experience (`src/content/experience/experience.md`)
+- Frontmatter: `work_history` (heading, entries[]), `volunteering` (heading, entries[]), `cv` (heading, intro, button_label, file).
 
 ---
 
@@ -218,29 +220,44 @@ portfolio/
 │   ├── components/
 │   │   ├── Nav.astro
 │   │   ├── Footer.astro
-│   │   ├── Hero.astro
-│   │   ├── ShaderCanvas.tsx   # React island — Three.js
 │   │   ├── ProjectCard.astro
 │   │   ├── ProjectGrid.astro
-│   │   ├── Timeline.astro
-│   │   └── SkillGroup.astro
+│   │   ├── contact/
+│   │   │   └── PatronusScene.tsx  # React island — contact animation
+│   │   ├── hero/
+│   │   │   ├── LivingForestHero.astro
+│   │   │   ├── Fireflies.astro
+│   │   │   ├── FallingLeaves.astro
+│   │   │   └── MossGlow.astro
+│   │   ├── home/
+│   │   │   └── GetInTouchSection.astro
+│   │   └── shared/
+│   │       ├── SectionHeading.astro
+│   │       ├── TimelineEntry.astro
+│   │       ├── SkillGroup.astro
+│   │       └── MagicalPowder.astro
 │   ├── content/
-│   │   ├── config.ts          # collection schemas
 │   │   ├── projects/          # *.md, one per project
 │   │   ├── about/
 │   │   │   └── about.md
+│   │   ├── experience/
+│   │   │   └── experience.md
 │   │   └── site/
-│   │       └── site.json
+│   │       └── config.md
+│   ├── content.config.ts      # collection schemas (Astro 5)
 │   ├── layouts/
 │   │   └── BaseLayout.astro
 │   ├── pages/
 │   │   ├── index.astro
-│   │   ├── projects/
-│   │   │   ├── index.astro
-│   │   │   └── [slug].astro
-│   │   └── about.astro
+│   │   ├── about.astro
+│   │   ├── experience.astro
+│   │   ├── contact.astro
+│   │   └── projects/
+│   │       ├── index.astro
+│   │       └── [slug].astro
 │   └── styles/
-│       └── global.css
+│       ├── global.css
+│       └── hero.css
 ├── astro.config.mjs
 ├── tailwind.config.js
 ├── tsconfig.json
@@ -452,3 +469,52 @@ Use Chrome DevTools device toolbar or actual devices. No phase is "done" until a
 - When adding dependencies, justify each one and prefer the Astro-native solution where available.
 
 ---
+---
+
+## Audit Criteria (for consistency reviews)
+
+When auditing this site, consider these issues "bugs" or "inconsistencies":
+
+### Visual consistency
+- Colors used outside the strict palette defined above
+- Font weights beyond the 2-at-a-time rule
+- Inconsistent section padding (must follow px-4 sm:px-6 md:px-12 lg:px-24 and py-12 md:py-20 lg:py-28)
+- Inconsistent heading sizes for same-level headings across pages
+- Buttons/cards with inconsistent border radius, padding, or glow treatments
+- Icons at different sizes when they should be uniform
+
+### Content consistency
+- Hardcoded text that should come from content collections
+- Hardcoded image paths that should be CMS-editable
+- Duplicated content across files instead of single source of truth
+
+### Responsiveness
+- Any page breaks at 1440px, 1024px, 768px, or 390px
+- Horizontal scrolling on mobile
+- Touch targets below 44x44px
+- WebGL/heavy animations not falling back on mobile or prefers-reduced-motion
+
+### Accessibility
+- Missing alt text on meaningful images
+- Missing aria-hidden on decorative images
+- Missing focus states or non-teal focus outlines
+- Incorrect heading hierarchy (h1 skipped, multiple h1s, etc.)
+- Contrast below WCAG AA on any text
+
+### Code quality
+- TypeScript errors or any-typed code
+- Unused imports or dead code
+- Components not reused where they should be (duplicated timelines, cards, etc.)
+- Missing prefers-reduced-motion handling on any animation
+- Console errors or warnings in production build
+
+### Performance
+- Images without explicit width/height
+- Images not using Astro's <Image /> component
+- JavaScript bundle per-page exceeding expected thresholds
+- Unused dependencies in package.json
+
+### CMS/content integrity
+- Zod schemas that don't match the Decap CMS config
+- Optional fields in CMS that aren't .optional() in Zod
+- Image paths in content that point to non-existent files
